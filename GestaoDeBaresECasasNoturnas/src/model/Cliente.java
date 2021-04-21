@@ -10,5 +10,5 @@ package model;
  * @author ketrim
  */
 public class Cliente {
-    
+
 }
