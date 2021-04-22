@@ -115,7 +115,9 @@ public class TelaPrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_sobreOSistemaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
- 
+
+        TelaGeralFrame myFrame = new TelaGeralFrame();
+        myFrame.setVisible(true); 
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
