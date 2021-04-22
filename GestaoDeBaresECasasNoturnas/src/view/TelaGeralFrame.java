@@ -213,12 +213,12 @@ public class TelaGeralFrame extends javax.swing.JFrame {
         String indice = (String) jComboBox.getSelectedItem();
         switch (indice) {
             case "Cliente":
-                ConsultaClienteFrame myF = new ConsultaClienteFrame();
-                myF.setVisible(true);
+                ConsultaClienteFrame F = new ConsultaClienteFrame();
+                F.setVisible(true);
                 break;
             case "Produto":
-               ConsultaProdutoFrame my = new ConsultaProdutoFrame();
-               my.setVisible(true);
+               ConsultaProdutoFrame y = new ConsultaProdutoFrame();
+               y.setVisible(true);
                 break;
           
         }      
