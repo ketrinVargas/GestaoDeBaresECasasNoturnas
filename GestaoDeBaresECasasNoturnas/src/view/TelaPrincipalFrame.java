@@ -99,7 +99,7 @@ public class TelaPrincipalFrame extends javax.swing.JFrame {
                 .addGap(117, 117, 117))
         );
 
-        pack();
+        setBounds(0, 0, 528, 371);
     }// </editor-fold>//GEN-END:initComponents
 
     private void comoUsarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comoUsarActionPerformed
@@ -116,8 +116,8 @@ public class TelaPrincipalFrame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        TelaGeralFrame myFrame = new TelaGeralFrame();
-        myFrame.setVisible(true); 
+        TelaGeralFrame telaG = new TelaGeralFrame();
+        telaG.setVisible(true); 
 
     }//GEN-LAST:event_jButton1ActionPerformed
 

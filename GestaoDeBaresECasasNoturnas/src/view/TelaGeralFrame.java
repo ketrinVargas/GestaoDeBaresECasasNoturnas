@@ -15,7 +15,6 @@ import java.util.logging.Logger;
  * @author ketrim
  */
 public class TelaGeralFrame extends javax.swing.JFrame {
-
     /** Creates new form TelaGeralFrame */
     public TelaGeralFrame() {
         initComponents();
@@ -161,15 +160,15 @@ public class TelaGeralFrame extends javax.swing.JFrame {
          String indice = (String) jComboBox.getSelectedItem();
         switch (indice) {
             case "Cliente":
-                CadastroClienteFrame myF = new CadastroClienteFrame();
+                CadastrosFrame myF = new CadastrosFrame();
                 myF.setVisible(true);
                 break;
             case "Produto":
-               CadastroProdutoFrame my = new CadastroProdutoFrame();
+               CadastrosFrame my = new CadastrosFrame();
                my.setVisible(true);
                 break;
             case "Consumo":
-                CadastroConsumoFrame m = new CadastroConsumoFrame();
+                CadastrosFrame m = new CadastrosFrame();
                 m.setVisible(true);
                 break;
         }      
