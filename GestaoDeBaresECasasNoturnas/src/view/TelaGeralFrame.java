@@ -42,6 +42,7 @@ public class TelaGeralFrame extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JSeparator();
         label1 = new java.awt.Label();
         jButton4 = new javax.swing.JButton();
+        jSeparator4 = new javax.swing.JSeparator();
 
         jScrollPane1.setViewportView(jTabbedPane1);
 
@@ -104,7 +105,8 @@ public class TelaGeralFrame extends javax.swing.JFrame {
                         .add(jInternalFrame1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(org.jdesktop.layout.GroupLayout.TRAILING, jSeparator3)
                             .add(org.jdesktop.layout.GroupLayout.TRAILING, jSeparator1)
-                            .add(jSeparator2))))
+                            .add(jSeparator2)
+                            .add(org.jdesktop.layout.GroupLayout.TRAILING, jSeparator4))))
                 .addContainerGap())
             .add(jInternalFrame1Layout.createSequentialGroup()
                 .add(129, 129, 129)
@@ -130,9 +132,11 @@ public class TelaGeralFrame extends javax.swing.JFrame {
                     .add(jButton2))
                 .add(18, 18, 18)
                 .add(jSeparator3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(30, 30, 30)
+                .add(18, 18, 18)
                 .add(jButton4)
-                .addContainerGap(114, Short.MAX_VALUE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 27, Short.MAX_VALUE)
+                .add(jSeparator4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(93, 93, 93))
         );
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
@@ -205,6 +209,7 @@ public class TelaGeralFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private java.awt.Label label1;
