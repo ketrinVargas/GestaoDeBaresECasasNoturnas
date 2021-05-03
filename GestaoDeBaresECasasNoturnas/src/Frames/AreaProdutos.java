@@ -53,7 +53,6 @@ public class AreaProdutos extends javax.swing.JInternalFrame {
         jCustoProdCad = new javax.swing.JTextField();
         jVendaProdCad = new javax.swing.JTextField();
         jBotaoConfirmaCadProd = new javax.swing.JButton();
-        jBotaoNovoCod = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -180,9 +179,9 @@ public class AreaProdutos extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Preço de venda");
 
-        jBotaoConfirmaCadProd.setText("Confirma");
+        jCodProdCad.setEditable(false);
 
-        jBotaoNovoCod.setText("Gerar novo");
+        jBotaoConfirmaCadProd.setText("Confirma");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -196,9 +195,8 @@ public class AreaProdutos extends javax.swing.JInternalFrame {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
-                                .addComponent(jCodProdCad, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(23, 23, 23)
-                                .addComponent(jBotaoNovoCod))
+                                .addComponent(jCodProdCad, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(198, 198, 198))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -229,8 +227,7 @@ public class AreaProdutos extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jCodProdCad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBotaoNovoCod))
+                    .addComponent(jCodProdCad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -249,7 +246,7 @@ public class AreaProdutos extends javax.swing.JInternalFrame {
                     .addComponent(jVendaProdCad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46)
                 .addComponent(jBotaoConfirmaCadProd)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
 
         jCadEdProd.addTab("Cadastro/Edição de Produtos", jPanel3);
@@ -278,7 +275,6 @@ public class AreaProdutos extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBotaoConfirmaProdVisualizar;
     private javax.swing.JButton jBotaoEditarProd;
     private javax.swing.JButton jBotaoExcluirProd;
-    private javax.swing.JButton jBotaoNovoCod;
     private javax.swing.JButton jBotaoPesquisarProd;
     private javax.swing.JTextField jBuscaCod;
     private javax.swing.JTabbedPane jCadEdProd;
