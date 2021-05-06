@@ -188,6 +188,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Excluir"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBotaoExcluirProdActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="jBotaoEditarProd">
                   <Properties>
@@ -339,6 +342,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jDescProdCad">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jDescProdCadActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="jQtdProdCad">
             </Component>
@@ -350,6 +356,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Confirma"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBotaoConfirmaCadProdActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

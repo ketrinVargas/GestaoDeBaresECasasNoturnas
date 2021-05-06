@@ -19,7 +19,7 @@ public class Consumo {
     private List<Item> itensConsumidos;
     private float valorTotal;
 
-    public Consumo( int rg) {
+    public Consumo( int cod, int rg, float valorTotal ) {
         this.cod = consumosRegistrados++;
         this.rg = rg;
         itensConsumidos = new ArrayList();

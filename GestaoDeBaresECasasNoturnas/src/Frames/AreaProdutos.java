@@ -5,17 +5,24 @@
  */
 package Frames;
 
+import java.util.List;
+import javax.swing.JOptionPane;
+import model.Produto;
+
 /**
  *
  * @author marin
  */
 public class AreaProdutos extends javax.swing.JInternalFrame {
-
+    
     /**
      * Creates new form AreaProdutos
      */
+    private static List<Produto> listaProduto;    
+    private static boolean editavel;
     public AreaProdutos() {
         initComponents();
+        editavel = false;
     }
 
     /**
@@ -82,6 +89,11 @@ public class AreaProdutos extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTabProdCadastrados);
 
         jBotaoExcluirProd.setText("Excluir");
+        jBotaoExcluirProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBotaoExcluirProdActionPerformed(evt);
+            }
+        });
 
         jBotaoEditarProd.setText("Editar");
         jBotaoEditarProd.addActionListener(new java.awt.event.ActionListener() {
@@ -181,7 +193,18 @@ public class AreaProdutos extends javax.swing.JInternalFrame {
 
         jCodProdCad.setEditable(false);
 
+        jDescProdCad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jDescProdCadActionPerformed(evt);
+            }
+        });
+
         jBotaoConfirmaCadProd.setText("Confirma");
+        jBotaoConfirmaCadProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBotaoConfirmaCadProdActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -269,6 +292,56 @@ public class AreaProdutos extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jBotaoEditarProdActionPerformed
 
+    private void jBotaoConfirmaCadProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBotaoConfirmaCadProdActionPerformed
+        // TODO add your handling code here:
+       if (jCodProdCad.getText().equals("") || jDescProdCad.getText().equals("") || jQtdProdCad.getText().equals("")||
+          jCustoProdCad.getText().equals("")|| jVendaProdCad.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Informe todos os campos!");
+      } else {
+          Produto prod = new Produto(
+                  Integer.parseInt(jCodProdCad.getText().trim()),
+                  jDescProdCad.getText().trim(),
+                  Integer.parseInt(jQtdProdCad.getText().trim()),
+                  Integer.parseInt(jCustoProdCad.getText().trim()),
+                  Integer.parseInt(jVendaProdCad.getText().trim()));
+ 
+            if (editavel){           
+               /* if (TelaPrincipal.editar(e, prod) == false) {
+                    JOptionPane.showMessageDialog(null, "Não foi possível editar.");
+                    editavel = false;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Edição efetuada!");
+                    editavel = false;
+                    ListaProduto.addProduto(prod);*/
+                limpar();
+            }     
+         }    
+        
+    }//GEN-LAST:event_jBotaoConfirmaCadProdActionPerformed
+
+    private void jDescProdCadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDescProdCadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jDescProdCadActionPerformed
+
+    private void jBotaoExcluirProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBotaoExcluirProdActionPerformed
+        // TODO add your handling code here:
+       int i = jTabProdCadastrados.getSelectedRow();
+      /*  int cod = getCod(i);
+        if (ListaProduto.remove(cod)) {
+            JOptionPane.showMessageDialog(null, "Campo não encontro");
+        } else {
+           
+           try {
+               ListaClientes.salvar();
+               DefaultTableModel dtm = (DefaultTableModel) jTabProdCadastrados.getModel(); 
+               dtm.removeRow(jTabProdCadastrados.getSelectedRow()); 
+               JOptionPane.showMessageDialog(null, "Campo deletado com sucesso.");
+            } catch (IOException ex) {
+                Logger.getLogger(AreaCliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }*/
+    }//GEN-LAST:event_jBotaoExcluirProdActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBotaoConfirmaCadProd;
@@ -298,4 +371,12 @@ public class AreaProdutos extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTabProdCadastrados;
     private javax.swing.JTextField jVendaProdCad;
     // End of variables declaration//GEN-END:variables
+    private void limpar() {
+      jCodProdCad.equals("");
+      jDescProdCad.equals("");
+      jQtdProdCad.equals("");
+      jCustoProdCad.equals("");
+      jVendaProdCad.equals("");
+    }
+    
 }

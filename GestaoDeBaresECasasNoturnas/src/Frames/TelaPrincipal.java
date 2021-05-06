@@ -6,6 +6,8 @@
 package Frames;
 
 import javax.swing.JOptionPane;
+import model.Cliente;
+import model.ListaClientes;
 
 /**
  *
@@ -264,7 +266,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
     }
-
+      
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem jAreaClienteBarraSuperior;
     private javax.swing.JMenuItem jAreaProdutosBarraSuperior;
@@ -283,4 +285,5 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JMenuItem jSobre;
     // End of variables declaration//GEN-END:variables
+ 
 }

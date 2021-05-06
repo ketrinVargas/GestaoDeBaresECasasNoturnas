@@ -5,6 +5,15 @@
  */
 package Frames;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Cliente;
+import model.ListaClientes;
+
 /**
  *
  * @author marin
@@ -14,8 +23,11 @@ public class AreaCliente extends javax.swing.JInternalFrame {
     /**
      * Creates new form AreaCliente
      */
+    private static List<Cliente> listaCliente;
+    private static boolean editavel;
     public AreaCliente() {
         initComponents();
+        editavel = false;
     }
 
     /**
@@ -79,6 +91,11 @@ public class AreaCliente extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTabClientesCadastrados);
 
         jBotaoExcluirCliente.setText("Excluir");
+        jBotaoExcluirCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBotaoExcluirClienteActionPerformed(evt);
+            }
+        });
 
         jBotaoEditarCliente.setText("Editar");
         jBotaoEditarCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -154,6 +171,11 @@ public class AreaCliente extends javax.swing.JInternalFrame {
         jDropDCatCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Selecione  a categoria desejada>", "Pista", "Camarote", "V.I.P" }));
 
         jButton1.setText("Confirma");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -229,6 +251,50 @@ public class AreaCliente extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jBotaoEditarClienteActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+      if (jNomeCadCliente.getText().equals("") || jNroRGCadCliente.getText().equals("")||
+          jDropDCatCliente.getSelectedItem().equals("")|| jCredCadCliente.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Informe todos os campos!");
+      } else {
+          Cliente client = new Cliente(
+                  Integer.parseInt(jNroRGCadCliente.getText().trim()),
+                   jNomeCadCliente.getText().trim(),
+                  Integer.parseInt(jCredCadCliente.getText().trim()));
+ 
+            if (editavel){           
+               /* if (TelaPrincipal.editar(e, client) == false) {
+                    JOptionPane.showMessageDialog(null, "Não foi possível editar.");
+                    editavel = false;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Edição efetuada!");
+                    editavel = false;
+                    ListaClientes.addCliente(client);*/
+                limpar();
+            }     
+         }    
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jBotaoExcluirClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBotaoExcluirClienteActionPerformed
+        // TODO add your handling code here:
+        int i = jTabClientesCadastrados.getSelectedRow();
+      /*  int cod = getCod(i);
+        if (ListaClientes.remove(cod)) {
+            JOptionPane.showMessageDialog(null, "Campo não encontro");
+        } else {
+           
+           try {
+               ListaClientes.salvar();
+               DefaultTableModel dtm = (DefaultTableModel) jTabClientesCadastrados.getModel(); 
+               dtm.removeRow(jTabClientesCadastrados.getSelectedRow()); 
+               JOptionPane.showMessageDialog(null, "Campo deletado com sucesso.");
+            } catch (IOException ex) {
+                Logger.getLogger(AreaCliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }*/
+    }//GEN-LAST:event_jBotaoExcluirClienteActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBotaoConfirmaClienteVis;
@@ -254,4 +320,13 @@ public class AreaCliente extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTabClientesCadastrados;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
+ 
+    private void limpar() {
+       jNomeCadCliente.equals("");
+       jNroRGCadCliente.equals("");
+       jDropDCatCliente.equals("");
+       jCredCadCliente.equals("");
+    }
+    
+  
 }

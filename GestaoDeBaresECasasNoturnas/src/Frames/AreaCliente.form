@@ -152,6 +152,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Excluir"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBotaoExcluirClienteActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jBotaoEditarCliente">
               <Properties>
@@ -298,6 +301,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Confirma"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

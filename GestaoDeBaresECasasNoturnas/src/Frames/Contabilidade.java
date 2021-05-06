@@ -5,6 +5,10 @@
  */
 package Frames;
 
+import java.util.List;
+import javax.swing.JOptionPane;
+import model.Consumo;
+
 /**
  *
  * @author marin
@@ -14,6 +18,7 @@ public class Contabilidade extends javax.swing.JInternalFrame {
     /**
      * Creates new form Contabilidade
      */
+     private static List<Consumo> listaConsumo;   
     public Contabilidade() {
         initComponents();
     }
@@ -283,6 +288,17 @@ public class Contabilidade extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        if (jCodConsumo.getText().equals("") || jRGClienteConsumo.getText().equals("")||
+          jCodProdConsumo.getText().equals("")|| jQtdProdConsumo.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Informe todos os campos!");
+      } else {
+          Consumo cons = new Consumo(
+                  Integer.parseInt(jRGClienteConsumo.getText().trim()),
+                  Integer.parseInt(jCodProdConsumo.getText().trim()),
+                  Integer.parseInt(jQtdProdConsumo.getText().trim()));
+
+                limpar();
+            }      
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -291,6 +307,21 @@ public class Contabilidade extends javax.swing.JInternalFrame {
 
     private void jBotaoPagarConsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBotaoPagarConsumoActionPerformed
         // TODO add your handling code here:
+       int i = jTabConsumoCliente.getSelectedRow();
+      /*  int cod = getCod(i);
+        if (ListaProduto.remove(cod)) {
+            JOptionPane.showMessageDialog(null, "Campo não encontro");
+        } else {
+           
+           try {
+               ListaConsumo.salvar();
+               DefaultTableModel dtm = (DefaultTableModel) jjTabConsumoCliente.getModel(); 
+               dtm.removeRow(jTabConsumoCliente.getSelectedRow()); 
+               JOptionPane.showMessageDialog(null, "Campo deletado com sucesso.");
+            } catch (IOException ex) {
+                Logger.getLogger(AreaCliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }*/
     }//GEN-LAST:event_jBotaoPagarConsumoActionPerformed
 
 
@@ -320,4 +351,10 @@ public class Contabilidade extends javax.swing.JInternalFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
-}
+ private void limpar() {
+      jCodConsumo.equals("");
+      jRGClienteConsumo.equals("");
+      jCodProdConsumo.equals("");
+      jQtdProdConsumo.equals("");
+ }
+ }
