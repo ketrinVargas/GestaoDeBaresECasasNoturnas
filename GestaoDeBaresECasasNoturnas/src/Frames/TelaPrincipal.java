@@ -8,6 +8,7 @@ package Frames;
 import javax.swing.JOptionPane;
 import model.Cliente;
 import model.ListaClientes;
+import model.Produto;
 
 /**
  *
@@ -286,4 +287,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jSobre;
     // End of variables declaration//GEN-END:variables
  
+    static boolean editar(String e, Cliente client) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+      static boolean editar(String e, Produto prod) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

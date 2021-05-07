@@ -20,6 +20,7 @@ public class AreaProdutos extends javax.swing.JInternalFrame {
      */
     private static List<Produto> listaProduto;    
     private static boolean editavel;
+     private static String e;
     public AreaProdutos() {
         initComponents();
         editavel = false;
@@ -299,23 +300,23 @@ public class AreaProdutos extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Informe todos os campos!");
       } else {
           Produto prod = new Produto(
-                  Integer.parseInt(jCodProdCad.getText().trim()),
                   jDescProdCad.getText().trim(),
                   Integer.parseInt(jQtdProdCad.getText().trim()),
-                  Integer.parseInt(jCustoProdCad.getText().trim()),
-                  Integer.parseInt(jVendaProdCad.getText().trim()));
+                  Float.parseFloat(jCustoProdCad.getText().trim()),
+                  Float.parseFloat(jVendaProdCad.getText().trim()));
  
             if (editavel){           
-               /* if (TelaPrincipal.editar(e, prod) == false) {
+               if (TelaPrincipal.editar(e, prod) == false) {
                     JOptionPane.showMessageDialog(null, "Não foi possível editar.");
                     editavel = false;
                 } else {
                     JOptionPane.showMessageDialog(null, "Edição efetuada!");
                     editavel = false;
-                    ListaProduto.addProduto(prod);*/
+                    listaProduto.add(prod);
                 limpar();
             }     
-         }    
+         }
+       }
         
     }//GEN-LAST:event_jBotaoConfirmaCadProdActionPerformed
 

@@ -295,7 +295,7 @@ public class Contabilidade extends javax.swing.JInternalFrame {
           Consumo cons = new Consumo(
                   Integer.parseInt(jRGClienteConsumo.getText().trim()),
                   Integer.parseInt(jCodProdConsumo.getText().trim()),
-                  Integer.parseInt(jQtdProdConsumo.getText().trim()));
+                  Boolean.getBoolean(jQtdProdConsumo.getText().trim()));
 
                 limpar();
             }      

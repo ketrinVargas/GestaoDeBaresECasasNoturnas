@@ -24,13 +24,20 @@ public class Item {
     public Item(int quantidade, Produto produto) {
         this.quantidade = quantidade;
         this.produto = produto;
-        ListaProdutoConsumido.addItem(this);
         //remove quantidade
     }
     
     public int getCodProduto(){
         return produto.getCod();
     }
+    
+    @Override
+    public String toString(){
+        return "Item{" + " Quantidade=" + this.quantidade + ", Produto=" + this.produto.toString(true);
+                
+    }
+    
+    
     
     
     

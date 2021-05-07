@@ -10,26 +10,30 @@ package model;
  * @author ketrim
  */
 public class Produto {
+    private static int produtosRegistrados = 0;
     private int cod;
     private String descricao;
     private int quantidade;
     private float precoCusto;
     private float precoVenda;
 
-    public Produto(int cod, String descricao, int quantidade, float precoCusto, float precoVenda) {
-        this.cod = cod;
+    public Produto(String descricao, int quantidade, float precoCusto, float precoVenda) {
+        this.cod = produtosRegistrados++;
         this.descricao = descricao;
         this.quantidade = quantidade;
         this.precoCusto = precoCusto;
         this.precoVenda = precoVenda;
-        ListaProduto.addProduto(this);
     }
 
-    @Override
-    public String toString() {
-        return "{" + " cod='" + getCod() + "'" + ", descricao='" + getDescricao() + "'" + ", quantidade='"
-                + getQuantidade() + "'" + ", precoCusto='" + getPrecoCusto() + "'" + ", precoVenda='" + getPrecoVenda()
-                + "'" + "}";
+  
+    public String toString(boolean ePraCliente) {
+        if(ePraCliente){
+            return "{" + " cod='" + getCod() + "'" + ", descricao='" + getDescricao() + "'" + ", preco='" + getPrecoVenda()
+                    + "'" + "}";
+        }else{
+            return "{" + " cod='" + getCod() + "'" + ", descricao='" + getDescricao() + ", quantidade="  + getQuantidade() + ",  precco custo=" + getPrecoCusto() +  "'" + ", preco='" + getPrecoVenda()
+                    + "'" + "}";
+        }
     }
 
     public int getCod() {
@@ -52,8 +56,8 @@ public class Produto {
         return this.quantidade;
     }
 
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
+    public void addQuantidade(int quantidade) {
+        this.quantidade += quantidade;
     }
 
     public float getPrecoCusto() {

@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  *
- * @author rafae
+ * @author rafael
  */
 public class ListaProduto {
     
@@ -36,9 +36,13 @@ public class ListaProduto {
         List<String> lista = new ArrayList();
         Collections.sort(listaProduto, Comparator.comparing(Produto::getCod));
         for (Produto p : listaProduto){
-            lista.add(p.toString());
+            lista.add(p.toString(false) + "\n");
         }
         return lista;
+    }
+    
+    public static int getTamanho(){
+        return listaProduto.size();
     }
     
 }

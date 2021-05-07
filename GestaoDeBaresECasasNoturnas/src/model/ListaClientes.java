@@ -15,7 +15,7 @@ import java.util.Comparator;
 
 /**
  *
- * @author rafae
+ * @author rafael
  */
 public class ListaClientes {
 
@@ -27,7 +27,7 @@ public class ListaClientes {
 
     public static Cliente consultarCliente(int rg) throws Exception {
         for (Cliente cliente : listaCliente) {
-            if (cliente.getRG() == rg) {
+            if (cliente.getRG() ==rg) {
                 return cliente;
             }
         }
@@ -36,9 +36,9 @@ public class ListaClientes {
 
     public static List<String> listarPorNome(){
         List<String> lista = new ArrayList();
-        Collections.sort(listaCliente, Comparator.comparing(Cliente::getNome));
+        Collections.sort(listaCliente, Comparator.comparing(Cliente::getNomeCaixaBaixa));
         for (Cliente c : listaCliente){
-            lista.add(c.toString());
+            lista.add(c.toString() + "\n");
         }
         return lista;
     }
@@ -47,11 +47,9 @@ public class ListaClientes {
         List<String> lista = new ArrayList();
         //Collections.sort(listaCliente, Comparator.comparing(Cliente::getCategoria));
         for (Cliente c : listaCliente){
-            lista.add(c.toString());
+            lista.add(c.toString() +"\n");
         }
         return lista;
     }
-    
-  
     
 }

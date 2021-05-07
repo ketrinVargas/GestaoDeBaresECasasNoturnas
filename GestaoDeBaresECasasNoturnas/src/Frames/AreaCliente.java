@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.Categoria;
 import model.Cliente;
 import model.ListaClientes;
 
@@ -25,6 +26,7 @@ public class AreaCliente extends javax.swing.JInternalFrame {
      */
     private static List<Cliente> listaCliente;
     private static boolean editavel;
+     private static String e;
     public AreaCliente() {
         initComponents();
         editavel = false;
@@ -259,20 +261,22 @@ public class AreaCliente extends javax.swing.JInternalFrame {
       } else {
           Cliente client = new Cliente(
                   Integer.parseInt(jNroRGCadCliente.getText().trim()),
+                  (Categoria) jDropDCatCliente.getSelectedItem(),
                    jNomeCadCliente.getText().trim(),
                   Integer.parseInt(jCredCadCliente.getText().trim()));
  
             if (editavel){           
-               /* if (TelaPrincipal.editar(e, client) == false) {
+                if (TelaPrincipal.editar(e, client) == false) {
                     JOptionPane.showMessageDialog(null, "Não foi possível editar.");
                     editavel = false;
                 } else {
                     JOptionPane.showMessageDialog(null, "Edição efetuada!");
                     editavel = false;
-                    ListaClientes.addCliente(client);*/
+                    ListaClientes.addCliente(client);
                 limpar();
             }     
-         }    
+        }
+      }
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -328,5 +332,6 @@ public class AreaCliente extends javax.swing.JInternalFrame {
        jCredCadCliente.equals("");
     }
     
+     
   
 }

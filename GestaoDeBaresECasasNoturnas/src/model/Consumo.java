@@ -16,19 +16,28 @@ public class Consumo {
     private static int consumosRegistrados = 0;
     private int cod;
     private int rg;
+    private boolean eVip;
     private List<Item> itensConsumidos;
     private float valorTotal;
 
-    public Consumo( int cod, int rg, float valorTotal ) {
+    public Consumo( int cod, int rg, boolean eVip) {
         this.cod = consumosRegistrados++;
         this.rg = rg;
+        this.eVip = eVip;
         itensConsumidos = new ArrayList();
-        ListaConsumo.addConsumo(this);
     }
 
     @Override
     public String toString() {
-        return "Consumo{" + "cod=" + cod + ", rg=" + rg + ", itensConsumidos=" + itensConsumidos.toString() + ", valorTotal=" + valorTotal + '}';
+        String itens = "";
+        for(Item i : itensConsumidos){
+            itens=itens+i.toString();
+        }
+                    
+        return "Consumo{" + "cod=" + cod + 
+                ", rg=" + rg + 
+                ", itensConsumidos=" + itens +  
+                ", valorTotal=" + valorTotal + '}';
     }
 
     public int getCod() {
@@ -55,14 +64,29 @@ public class Consumo {
     }
 
     
-    private void atualizaTotal(){
-        float valor = 0;
-        for (Item i: itensConsumidos){
-            float preco =  i.getProduto().getPrecoVenda();
-            int quantidade = i.getQuantidade();
-            valor = valor + (preco*quantidade);
+    public void atualizaTotal(){
+        if(eVip){
+            this.valorTotal = 200;
+        }else{
+            float valor = 0;
+            for (Item i: itensConsumidos){
+                float preco =  i.getProduto().getPrecoVenda();
+                int quantidade = i.getQuantidade();
+                valor = valor + (preco*quantidade);
+            }
+            this.valorTotal = valor;
         }
-        this.valorTotal = valor;
+            
+      
+    }
+    
+    public int[] getProdutoQuantidade(){
+        int[] produtoQuantidade = new int[100];
+        for(Item i : itensConsumidos){
+            int id = i.getCodProduto();
+            produtoQuantidade[id] = i.getQuantidade();
+        }
+        return produtoQuantidade;
     }
 
 }

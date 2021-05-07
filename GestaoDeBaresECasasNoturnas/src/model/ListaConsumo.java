@@ -11,14 +11,20 @@ import java.util.List;
 
 /**
  *
- * @author rafae
+ * @author rafael
  */
 public class ListaConsumo {
     
     private static final List<Consumo> listaConsumo= new ArrayList();
     
-    public static void addConsumo(Consumo consumo){
-        listaConsumo.add(consumo);
+    public static void addConsumo(Consumo consumo) throws Exception{
+        if(consumo.equals(null)){
+            throw new  Exception ("Objeto nullo");
+        }else{
+            
+           listaConsumo.add(consumo);
+        }
+        
     }
     
     /**
@@ -43,11 +49,39 @@ public class ListaConsumo {
         //pegar o valor do consumo
         float valorConsumido = consumo.getValorTotal();
 
-        //debitaValor
-        ListaClientes.consultarCliente(rg).debita(valorConsumido);
-        
         //remover consumo
         listaConsumo.remove(consumo);
+    }
+    
+    public static List<String> mostrarCustoLucro() throws Exception{
+        int[] produtoQuantidade = new int[1000];
+        for (Consumo c : listaConsumo){
+            int[] produtoQ = c.getProdutoQuantidade();
+            for(int i=0; i< produtoQ.length; i++){
+                produtoQuantidade[i] =+ produtoQ[i];
+            }
+        }
+        float custoTotal = 0;
+        float lucroTotal = 0;
+        List<String> relatorio = new ArrayList();
+        for( int i = 0;i < ListaProduto.getTamanho(); i++){
+            Produto p = ListaProduto.consultarProduto(i);
+            custoTotal += (p.getPrecoCusto()*produtoQuantidade[i]);
+            lucroTotal += (p.getPrecoVenda()*produtoQuantidade[i]);
+            relatorio.add(produtoQuantidade[i] + p.toString(false) + "\n");
+        }
+        relatorio.add("Custo: " + custoTotal + "\n");
+        relatorio.add("FaturamentoTotal: " + lucroTotal + "\n");
+        relatorio.add("Lucro Total: " + (lucroTotal - custoTotal) + "\n");
+        return relatorio;
+    }
+    
+    public static List<String> mostrarConsumosAtivos(){
+        List<String> listaFinal = new ArrayList();
+        for(Consumo c : listaConsumo){
+            listaFinal.add(c.toString());
+        }
+        return listaFinal;
     }
     
 }

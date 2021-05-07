@@ -13,22 +13,30 @@ public class Cliente {
 
     private int RG;
     private String nome;
-
+    private Categoria cat;
     private float credito;
 
-    public Cliente(int RG, String nome, int credito) {
+    /**
+     *
+     * @param RG 
+     * @param cat VIP, CAMAROTE, PISTA 
+     * @param nome 
+     * @param credito
+     */
+    public Cliente(int RG, Categoria cat, String nome, int credito) {
         this.RG = RG;
+        this.cat = cat;
         this.nome = nome;
         this.credito = credito;
-        ListaClientes.addCliente(this);
     }
 
     @Override
     public String toString() {
         return "{" +
             " RG='" + getRG() + "'" +
-            ", nome='" + getNome() + "'" +
-            ", credito='" + getCredito() + "'" +
+            ", Categoria='" + this.cat.toString() + "'" +
+            ", Nome='" + getNome() + "'" +
+            ", Credito='" + getCredito() + "'" +
             "}";
     }
 
@@ -40,8 +48,18 @@ public class Cliente {
         return this.nome;
     }
 
+    public String getNomeCaixaBaixa() {
+        return this.nome.toLowerCase();
+    }
+    
+
     public float getCredito() {
         return this.credito;
+    }
+    
+    public void credita(int credito){
+        this.credito += credito;
+        
     }
 
     public void debita(float debito) throws Exception {
