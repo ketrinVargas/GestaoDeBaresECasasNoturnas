@@ -3,28 +3,38 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package model.Objetos;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.Serializable;
+import model.Listas.ListaProduto;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.Arquivo;
+import model.Enums.Classe;
 
 /**
  *
- * @author ketrim
+ * @author Ketrin D. Vargas, Marina B. Otokovieski, Rafael Souza
  */
-public class Consumo {
+public class Consumo implements Serializable {
     private static int consumosRegistrados = 0;
     private int cod;
     private int rg;
     private boolean eVip;
     private List<Item> itensConsumidos;
     private float valorTotal;
+    private boolean pago;
 
-    public Consumo( int cod, int rg, boolean eVip) {
+    public Consumo( int rg, boolean eVip) {
         this.cod = consumosRegistrados++;
         this.rg = rg;
         this.eVip = eVip;
         itensConsumidos = new ArrayList();
+        this.pago = false;
     }
 
     @Override
@@ -55,12 +65,22 @@ public class Consumo {
         //cria o item
         Item item = new Item(quantidade, produto);
         
+        produto.rmQuantidade(quantidade);
+        
         //adiciona o item
         itensConsumidos.add(item);
     }
     
     public int getRg() {
         return this.rg;
+    }
+    
+    public boolean foiPago(){
+        return pago;
+    }
+    
+    public void definirPago(){
+        this.pago = true;
     }
 
     
@@ -87,6 +107,24 @@ public class Consumo {
             produtoQuantidade[id] = i.getQuantidade();
         }
         return produtoQuantidade;
+    }
+    
+    public static void inicia() {
+        try {
+            consumosRegistrados = (int) Arquivo.getArquivo(Classe.CONSUMO);
+        } catch (IOException ex) {
+            consumosRegistrados = 0;
+        } catch (ClassNotFoundException ex) {
+            consumosRegistrados = 0;
+        }
+    }
+    public static void encera() throws IOException{
+        try {
+            Arquivo.setArquivo(Classe.CONSUMO, consumosRegistrados);
+        } catch (IOException ex) {
+            Arquivo.iniciaArquivos(Classe.CONSUMO);
+            encera();
+        }
     }
 
 }

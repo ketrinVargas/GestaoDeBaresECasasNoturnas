@@ -6,31 +6,49 @@
 package Frames;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.Categoria;
-import model.Cliente;
-import model.ListaClientes;
+import javax.swing.table.TableRowSorter;
+import model.Enums.Categoria;
+import model.Listas.ListaClientes;
+import model.Objetos.Cliente;
+
 
 /**
  *
- * @author marin
+ * @author Ketrin D. Vargas, Marina B. Otokovieski, Rafael Souza
  */
+
 public class AreaCliente extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form AreaCliente
      */
     private static List<Cliente> listaCliente;
+    private DefaultTableModel dtm;
+    private static int ide;
+    private static int[] indexRg;
     private static boolean editavel;
-     private static String e;
-    public AreaCliente() {
+
+     
+    public AreaCliente(ListaClientes listaCliente) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         initComponents();
+        indexRg = new int[1000];
         editavel = false;
+        ide = 0;
+        inicia();
+        
+        
+        DefaultTableModel modelo = (DefaultTableModel) jTabClientesCadastrados.getModel();
+        jTabClientesCadastrados.setRowSorter(new TableRowSorter (modelo));
     }
+
+ 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -52,6 +70,7 @@ public class AreaCliente extends javax.swing.JInternalFrame {
         jBotaoExcluirCliente = new javax.swing.JButton();
         jBotaoEditarCliente = new javax.swing.JButton();
         jBotaoConfirmaClienteVis = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -73,6 +92,11 @@ public class AreaCliente extends javax.swing.JInternalFrame {
         jLabel7.setText("Busca por RG");
 
         jBotaoPesquisarCliente.setText("Pesquisar");
+        jBotaoPesquisarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBotaoPesquisarClienteActionPerformed(evt);
+            }
+        });
 
         jTabClientesCadastrados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -88,6 +112,16 @@ public class AreaCliente extends javax.swing.JInternalFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTabClientesCadastrados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabClientesCadastradosMouseClicked(evt);
+            }
+        });
+        jTabClientesCadastrados.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTabClientesCadastradosKeyReleased(evt);
             }
         });
         jScrollPane1.setViewportView(jTabClientesCadastrados);
@@ -106,7 +140,19 @@ public class AreaCliente extends javax.swing.JInternalFrame {
             }
         });
 
-        jBotaoConfirmaClienteVis.setText("Confirma");
+        jBotaoConfirmaClienteVis.setText("Ordenar");
+        jBotaoConfirmaClienteVis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBotaoConfirmaClienteVisActionPerformed(evt);
+            }
+        });
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Nome", "Categoria" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -115,6 +161,15 @@ public class AreaCliente extends javax.swing.JInternalFrame {
             .addComponent(jScrollPane1)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jBotaoExcluirCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jBotaoEditarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jBotaoConfirmaClienteVis, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -127,14 +182,7 @@ public class AreaCliente extends javax.swing.JInternalFrame {
                                 .addComponent(jBuscaRG, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jBotaoPesquisarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 70, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jBotaoExcluirCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBotaoEditarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jBotaoConfirmaClienteVis)))
+                        .addGap(0, 70, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -153,8 +201,9 @@ public class AreaCliente extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBotaoExcluirCliente)
                     .addComponent(jBotaoEditarCliente)
-                    .addComponent(jBotaoConfirmaClienteVis))
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addComponent(jBotaoConfirmaClienteVis)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Clientes Cadastrados", jPanel1);
@@ -251,10 +300,23 @@ public class AreaCliente extends javax.swing.JInternalFrame {
 
     private void jBotaoEditarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBotaoEditarClienteActionPerformed
         // TODO add your handling code here:
+        
+        if(jTabClientesCadastrados.getSelectedRow() != -1){
+            
+            jTabClientesCadastrados.setValueAt(jNomeCadCliente.getText(), jTabClientesCadastrados.getSelectedRow(), 0);
+            jTabClientesCadastrados.setValueAt(jNroRGCadCliente.getText(), jTabClientesCadastrados.getSelectedRow(), 1);
+            jTabClientesCadastrados.setValueAt((Categoria) jDropDCatCliente.getSelectedItem(), jTabClientesCadastrados.getSelectedRow(), 2);            
+            jTabClientesCadastrados.setValueAt(jCredCadCliente.getText(), jTabClientesCadastrados.getSelectedRow(), 3);           
+         
+    
+        }
+        
     }//GEN-LAST:event_jBotaoEditarClienteActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        
+        
       if (jNomeCadCliente.getText().equals("") || jNroRGCadCliente.getText().equals("")||
           jDropDCatCliente.getSelectedItem().equals("")|| jCredCadCliente.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Informe todos os campos!");
@@ -266,38 +328,112 @@ public class AreaCliente extends javax.swing.JInternalFrame {
                   Integer.parseInt(jCredCadCliente.getText().trim()));
  
             if (editavel){           
-                if (TelaPrincipal.editar(e, client) == false) {
+                if (ListaClientes.editar(ide, client) == false) {
                     JOptionPane.showMessageDialog(null, "Não foi possível editar.");
                     editavel = false;
                 } else {
                     JOptionPane.showMessageDialog(null, "Edição efetuada!");
                     editavel = false;
-                    ListaClientes.addCliente(client);
+                    ListaClientes.inicia();
                 limpar();
-            }     
+                } 
+    
+            }else{
+                criarCliente(client);
+            }
+         }
+
+        try {
+            listarClientes();
+        } catch (IllegalAccessException | InvocationTargetException ex) {
+                    Logger.getLogger(AreaCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
-      }
-        
+                       
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jBotaoExcluirClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBotaoExcluirClienteActionPerformed
         // TODO add your handling code here:
-        int i = jTabClientesCadastrados.getSelectedRow();
-      /*  int cod = getCod(i);
-        if (ListaClientes.remove(cod)) {
+        
+        int index = jTabClientesCadastrados.getSelectedRow();
+        int rg = getRg(index);
+       
+        if (ListaClientes.remove(rg)) {
             JOptionPane.showMessageDialog(null, "Campo não encontro");
         } else {
-           
-           try {
-               ListaClientes.salvar();
-               DefaultTableModel dtm = (DefaultTableModel) jTabClientesCadastrados.getModel(); 
-               dtm.removeRow(jTabClientesCadastrados.getSelectedRow()); 
-               JOptionPane.showMessageDialog(null, "Campo deletado com sucesso.");
-            } catch (IOException ex) {
-                Logger.getLogger(AreaCliente.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }*/
+            ListaClientes.inicia();
+            
+            DefaultTableModel dtm = (DefaultTableModel) jTabClientesCadastrados.getModel();
+            dtm.removeRow(jTabClientesCadastrados.getSelectedRow());
+            JOptionPane.showMessageDialog(null, "Campo deletado com sucesso.");
+        }
+
     }//GEN-LAST:event_jBotaoExcluirClienteActionPerformed
+
+    private void jTabClientesCadastradosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabClientesCadastradosMouseClicked
+        // TODO add your handling code here:
+        
+        if(jTabClientesCadastrados.getSelectedRow() != -1){
+            
+          jNomeCadCliente.setText(jTabClientesCadastrados.getValueAt(jTabClientesCadastrados.getSelectedRow(), 0).toString());
+          jNroRGCadCliente.setText(jTabClientesCadastrados.getValueAt(jTabClientesCadastrados.getSelectedRow(), 1).toString());
+          jDropDCatCliente.setActionCommand(jTabClientesCadastrados.getValueAt(jTabClientesCadastrados.getSelectedRow(), 2).toString());
+          jCredCadCliente.setText(jTabClientesCadastrados.getValueAt(jTabClientesCadastrados.getSelectedRow(), 3).toString());
+    
+        }
+            
+        
+    }//GEN-LAST:event_jTabClientesCadastradosMouseClicked
+
+    private void jTabClientesCadastradosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTabClientesCadastradosKeyReleased
+        // TODO add your handling code here:
+        
+        if(jTabClientesCadastrados.getSelectedRow() != -1){
+            
+          jNomeCadCliente.setText(jTabClientesCadastrados.getValueAt(jTabClientesCadastrados.getSelectedRow(), 0).toString());
+          jNroRGCadCliente.setText(jTabClientesCadastrados.getValueAt(jTabClientesCadastrados.getSelectedRow(), 1).toString());
+          jDropDCatCliente.setActionCommand(jTabClientesCadastrados.getValueAt(jTabClientesCadastrados.getSelectedRow(), 2).toString());
+          jCredCadCliente.setText(jTabClientesCadastrados.getValueAt(jTabClientesCadastrados.getSelectedRow(), 3).toString());
+    
+        }
+        
+    }//GEN-LAST:event_jTabClientesCadastradosKeyReleased
+
+    private void jBotaoPesquisarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBotaoPesquisarClienteActionPerformed
+        // TODO add your handling code here:
+        
+        int indice = Integer.parseInt(jBuscaRG.getText());
+        try {
+            ListaClientes.consultarCliente(indice);
+            listarClientes();           
+        } catch (Exception ex) {
+            Logger.getLogger(AreaCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+              
+        
+    }//GEN-LAST:event_jBotaoPesquisarClienteActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jBotaoConfirmaClienteVisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBotaoConfirmaClienteVisActionPerformed
+        // TODO add your handling code here:
+        
+         String indice = jComboBox1.getSelectedItem().toString();
+        switch (indice) {
+            case "Nome":
+                ListaClientes.listarPorNome();
+           break;
+            case "Categoria":
+                ListaClientes.listaPorCategoria();
+            break;  
+        }  
+        try {
+            listarClientes();
+        } catch (IllegalAccessException | InvocationTargetException ex) {
+                    Logger.getLogger(AreaCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jBotaoConfirmaClienteVisActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -307,6 +443,7 @@ public class AreaCliente extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBotaoPesquisarCliente;
     private javax.swing.JTextField jBuscaRG;
     private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JTextField jCredCadCliente;
     private javax.swing.JComboBox<String> jDropDCatCliente;
     private javax.swing.JLabel jLabel1;
@@ -332,6 +469,60 @@ public class AreaCliente extends javax.swing.JInternalFrame {
        jCredCadCliente.equals("");
     }
     
-     
+    public static int getRg(int index){
+        return indexRg[index];
+    }
+
+    private void criarCliente(Cliente c){
+
+        if (ListaClientes.addCliente(c) == false) {
+            JOptionPane.showMessageDialog(null, "Não foi possível salvar.");
+        } else {
+            JOptionPane.showMessageDialog(null, "Cadastro Efetuado!");
+            Object obj = null;
+            dtm.addRow((Object[]) obj);
+            ListaClientes.inicia();
+            limpar();
+            }    
+            
+ }
+   public void listarClientes() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+        Cliente objetoCliente =  new Cliente(0, null, null, 0);
+        dtm = (DefaultTableModel) jTabClientesCadastrados.getModel();
+        listaCliente = ListaClientes.getLista(objetoCliente, null, null);
+
+        for (int i = 0; i<listaCliente.size(); i++){
+            Cliente client = listaCliente.get(i);
+            indexRg[i++] = client.getRG(); 
+        }
+
+        int indexador = 0;
+        for (Cliente m : listaCliente){
+            jTabClientesCadastrados.setValueAt(m.getNome(), indexador, 0);
+            jTabClientesCadastrados.setValueAt(m.getRG(), indexador, 1);
+            jTabClientesCadastrados.setValueAt(m.getCategoria(), indexador, 2);
+            jTabClientesCadastrados.setValueAt(m.getCredito(), indexador, 3);
+            indexador++;
+        }
+   }
+   
+    private void inicia() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+        Cliente objetoCliente =  new Cliente(0, null, null, 0);
+        listaCliente = ListaClientes.getLista(objetoCliente, null, null);
+        dtm = (DefaultTableModel) jTabClientesCadastrados.getModel();
+        for (int i = 0; i<listaCliente.size(); i++){
+            Object obj = null;
+        dtm.addRow((Object[]) obj);
+        }
+        
+        int indexador = 0;
+        for (Cliente m : listaCliente){
+                jTabClientesCadastrados.setValueAt(m.getNome(), indexador, 0);
+                jTabClientesCadastrados.setValueAt(m.getRG(), indexador, 1);
+                jTabClientesCadastrados.setValueAt(m.getCategoria(), indexador, 2);
+                jTabClientesCadastrados.setValueAt(m.getCredito(), indexador, 3);
+                indexador++;
+            }
+ }
   
 }

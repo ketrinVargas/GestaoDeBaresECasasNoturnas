@@ -4,18 +4,26 @@
  * and open the template in the editor.
  */
 
-package model;
 
+
+import model.Objetos.Cliente;
+import model.Objetos.Consumo;
+import model.Objetos.Produto;
+import model.Listas.ListaClientes;
+import model.Listas.ListaConsumo;
+import model.Listas.ListaProduto;
+import model.Enums.Categoria;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Enums.Classe;
 
 /**
  *
- * @author rafael
+ * @author Ketrin D. Vargas, Marina B. Otokovieski, Rafael Souza
  */
 public class Main {
     
@@ -30,6 +38,18 @@ public class Main {
        
        
        public static void main(String[] args) throws Exception{
+           
+           for(Classe c : Classe.values()){
+               //Arquivo.iniciaArquivos(c);
+           }
+           
+           ListaClientes.inicia();
+           ListaConsumo.inicia();
+           ListaProduto.inicia();
+           Consumo.inicia();
+           Produto.inicia();
+
+           
            //////ENTRADA///////////
            entradaCamarote  = new Produto("Entrada camarote", 00, 0, 30);
            entradaCamarote.addQuantidade(100);
@@ -40,6 +60,9 @@ public class Main {
            ListaProduto.addProduto(entradaCamarote);
            ListaProduto.addProduto(entradaVip);
            ListaProduto.addProduto(entradaPista);
+           
+           //////////PRODUTOS//////////
+           
            
            
            ////////////CLIENTES//////////
@@ -53,7 +76,7 @@ public class Main {
           
            
            //////////CONSUMO//////////////
-          // consumoRafael = new Consumo(7372951, false);
+           consumoRafael = new Consumo(7372951, false);
            ListaConsumo.addConsumo(consumoRafael);
   
            consumoRafael.addItem(1, 0);
@@ -64,12 +87,17 @@ public class Main {
             float valorTotal  = consumo.getValorTotal();
             Cliente cliente =  ListaClientes.consultarCliente(7372951);
             cliente.debita(valorTotal);
-            //ListaConsumo.pagarConsumo(7372951);
+            ListaConsumo.pagarConsumo(7372951);
             
             
            
             imprimeTudo();
             
+            ListaClientes.encera();
+            ListaConsumo.encera();
+            ListaProduto.encera();
+            Consumo.encera();
+            Produto.encera();
            
        }
        

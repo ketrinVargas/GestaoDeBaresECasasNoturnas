@@ -4,26 +4,36 @@
  * and open the template in the editor.
  */
 
-package model;
+package model.Listas;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import model.Arquivo;
+import model.Enums.Classe;
+import model.Objetos.Consumo;
+import model.Objetos.Produto;
 
 /**
  *
- * @author rafael
+ * @author Ketrin D. Vargas, Marina B. Otokovieski, Rafael Souza
  */
 public class ListaConsumo {
     
-    private static final List<Consumo> listaConsumo= new ArrayList();
+    private static List<Consumo> listaConsumo;
+    private static List<Consumo> ultimaLista;
     
-    public static void addConsumo(Consumo consumo) throws Exception{
+    public static boolean addConsumo(Consumo consumo) throws Exception{
         if(consumo.equals(null)){
             throw new  Exception ("Objeto nullo");
         }else{
             
            listaConsumo.add(consumo);
         }
+        return false;
         
     }
     
@@ -35,22 +45,22 @@ public class ListaConsumo {
      */
     public static Consumo consultarConsumo(int rg) throws Exception{
         for(Consumo c : listaConsumo){
-            if (c.getRg() == rg){
+            if (!c.foiPago() && c.getRg() == rg){
                 return c;
             }
         }
         throw new Exception ("Nenhum consumo encontrado");
     }
     
-    public static  void pagarConsumo(int rg) throws Exception {
+    public static  boolean pagarConsumo(int rg) throws Exception {
         //pegar o consumo     
         Consumo consumo = consultarConsumo(rg);
         
         //pegar o valor do consumo
         float valorConsumido = consumo.getValorTotal();
 
-        //remover consumo
-        listaConsumo.remove(consumo);
+        consumo.definirPago();
+        return false;
     }
     
     public static List<String> mostrarCustoLucro() throws Exception{
@@ -79,9 +89,48 @@ public class ListaConsumo {
     public static List<String> mostrarConsumosAtivos(){
         List<String> listaFinal = new ArrayList();
         for(Consumo c : listaConsumo){
-            listaFinal.add(c.toString());
+            if(!c.foiPago()){
+                listaFinal.add(c.toString());
+            }
         }
         return listaFinal;
+    }    
+    
+    public static void inicia(){
+        try {
+            listaConsumo = (List<Consumo>) Arquivo.getArquivo(Classe.LISTA_CONSUMO);
+        } catch (IOException ex) {
+            listaConsumo = new ArrayList();
+        } catch (ClassNotFoundException ex) {
+            listaConsumo = new ArrayList();            
+        }
     }
     
+    public static void encera() throws IOException{
+        try {
+            Arquivo.setArquivo(Classe.LISTA_CONSUMO, listaConsumo);
+        } catch (IOException ex) {
+            Arquivo.iniciaArquivos(Classe.LISTA_CONSUMO);
+            encera();
+        }
+    }
+    
+    public static List<Consumo> getLista(Object obj, String procura, Method metodo) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+       ultimaLista = new ArrayList();
+       for(Consumo m : listaConsumo){
+           if (obj.getClass().isInstance(m)){
+               if (procura==null){
+                   ultimaLista.add(m);
+               }else{
+                   if (String.valueOf(metodo.invoke(m)).trim().toLowerCase().contains(procura.toLowerCase().trim())){
+                       ultimaLista.add(m);
+                   }
+               }
+           }
+       }
+       return ultimaLista;
+   }
+    
+
+   
 }

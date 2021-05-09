@@ -3,17 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package model.Objetos;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.Arquivo;
+import model.Enums.Classe;
 
 /**
  *
- * @author ketrim
+ * @author Ketrin D. Vargas, Marina B. Otokovieski, Rafael Souza
  */
-public class Produto {
-    private static int produtosRegistrados = 0;
+public class Produto implements Serializable {
+    private static int produtosRegistrados;
     private int cod;
     private String descricao;
     private int quantidade;
+    private int quantidadeConsumida;
     private float precoCusto;
     private float precoVenda;
 
@@ -21,6 +30,7 @@ public class Produto {
         this.cod = produtosRegistrados++;
         this.descricao = descricao;
         this.quantidade = quantidade;
+        this.quantidadeConsumida = 0;
         this.precoCusto = precoCusto;
         this.precoVenda = precoVenda;
     }
@@ -31,7 +41,7 @@ public class Produto {
             return "{" + " cod='" + getCod() + "'" + ", descricao='" + getDescricao() + "'" + ", preco='" + getPrecoVenda()
                     + "'" + "}";
         }else{
-            return "{" + " cod='" + getCod() + "'" + ", descricao='" + getDescricao() + ", quantidade="  + getQuantidade() + ",  precco custo=" + getPrecoCusto() +  "'" + ", preco='" + getPrecoVenda()
+            return "{" + " cod='" + getCod() + "'" + ", descricao='" + getDescricao() + ", quantidade="  + getQuantidade() + ", quantidade consumida="  + getQuantidadeConsumida() + ",  precco custo=" + getPrecoCusto() +  "'" + ", preco='" + getPrecoVenda()
                     + "'" + "}";
         }
     }
@@ -59,6 +69,11 @@ public class Produto {
     public void addQuantidade(int quantidade) {
         this.quantidade += quantidade;
     }
+    
+    public void rmQuantidade(int quantidade){
+        this.quantidade -= quantidade;
+        this.quantidadeConsumida += quantidade;
+    }
 
     public float getPrecoCusto() {
         return this.precoCusto;
@@ -74,5 +89,28 @@ public class Produto {
 
     public void setPrecoVenda(float precoVenda) {
         this.precoVenda = precoVenda;
+    }
+
+    private int getQuantidadeConsumida() {
+        return this.quantidadeConsumida;
+    }
+    
+    public static void inicia() {
+        try {
+            produtosRegistrados = (int) Arquivo.getArquivo(Classe.PRODUTO);
+        } catch (IOException ex) {
+            produtosRegistrados = 0;
+        } catch (ClassNotFoundException ex) {
+            produtosRegistrados = 0;
+        } 
+    }
+    
+    public static void encera() throws IOException{
+        try {
+            Arquivo.setArquivo(Classe.PRODUTO, produtosRegistrados);
+        } catch (IOException ex) {
+            Arquivo.iniciaArquivos(Classe.PRODUTO);
+            encera();
+        }
     }
 }

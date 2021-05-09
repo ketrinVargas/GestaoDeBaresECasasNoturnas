@@ -5,22 +5,33 @@
  */
 package Frames;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import model.Cliente;
-import model.ListaClientes;
-import model.Produto;
+import model.Listas.ListaClientes;
+import model.Listas.ListaConsumo;
+import model.Listas.ListaProduto;
 
 /**
  *
- * @author marin
+ * @author Ketrin D. Vargas, Marina B. Otokovieski, Rafael Souza
  */
 public class TelaPrincipal extends javax.swing.JFrame {
 
     /**
      * Creates new form TelaPrincipal
      */
+    private static ListaClientes listaCliente;
+    private static ListaProduto listaProduto;
+    private static ListaConsumo listaConsumo;
+    
     public TelaPrincipal() {
         initComponents();
+        listaCliente = new ListaClientes();
+        listaProduto = new ListaProduto();
+        listaConsumo = new ListaConsumo();
+        
     }
 
     /**
@@ -194,20 +205,45 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void jBotaoConfirmaTelaInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBotaoConfirmaTelaInicialActionPerformed
         String indice = jComboBox1.getSelectedItem().toString();
         switch (indice) {
-            case "Área de Clientes":
-                AreaCliente Clientess = new AreaCliente();
+        
+        case "Área de Clientes":
+
+        AreaCliente Clientess = null;          
+        try {
+            try {
+                Clientess = new AreaCliente(listaCliente);
+            } catch (IllegalAccessException | InvocationTargetException ex) {
+                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
                 jDesktopPane2.add(Clientess);
                 Clientess.setVisible(true);
 
                 break;
-            case "Área de Produtos":
-                AreaProdutos Produtoss = new AreaProdutos();
+                
+        case "Área de Produtos":
+        
+         AreaProdutos Produtoss = null;
+        try {
+             Produtoss = new AreaProdutos(listaProduto);
+        } catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
                 jDesktopPane2.add(Produtoss);
                 Produtoss.setVisible(true);
 
                 break;
-            case "Administração":
-                Contabilidade Adm = new Contabilidade();
+                
+        case "Administração":
+        
+        Contabilidade Adm = null;      
+        try {
+             Adm = new Contabilidade(listaConsumo);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
                 jDesktopPane2.add(Adm);
                 Adm.setVisible(true);
 
@@ -216,21 +252,40 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jBotaoConfirmaTelaInicialActionPerformed
 
     private void jAreaClienteBarraSuperiorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAreaClienteBarraSuperiorActionPerformed
-        AreaCliente Clientess = new AreaCliente();
+        AreaCliente Clientess = null;
+       try {
+           Clientess = new AreaCliente(listaCliente);
+       } catch (IllegalArgumentException ex) {
+           Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+       } catch (IllegalAccessException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvocationTargetException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
         jDesktopPane2.add(Clientess);
         Clientess.setVisible(true);
     }//GEN-LAST:event_jAreaClienteBarraSuperiorActionPerformed
 
     private void jAreaProdutosBarraSuperiorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAreaProdutosBarraSuperiorActionPerformed
-        AreaProdutos Produtoss = new AreaProdutos();
+        AreaProdutos Produtoss = null;       
+         try {
+             Produtoss = new AreaProdutos(listaProduto);
+        } catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
         jDesktopPane2.add(Produtoss);
         Produtoss.setVisible(true);
     }//GEN-LAST:event_jAreaProdutosBarraSuperiorActionPerformed
 
     private void jCaixaBarraSuperiorTelaPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCaixaBarraSuperiorTelaPrincipalActionPerformed
-        Contabilidade Adm = new Contabilidade();
-        jDesktopPane2.add(Adm);
-        Adm.setVisible(true);
+        Contabilidade Adm = null;
+        try {
+             Adm = new Contabilidade(listaConsumo);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                jDesktopPane2.add(Adm);
+                Adm.setVisible(true);
     }//GEN-LAST:event_jCaixaBarraSuperiorTelaPrincipalActionPerformed
 
     /**
@@ -286,12 +341,5 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JMenuItem jSobre;
     // End of variables declaration//GEN-END:variables
- 
-    static boolean editar(String e, Cliente client) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-      static boolean editar(String e, Produto prod) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
 }

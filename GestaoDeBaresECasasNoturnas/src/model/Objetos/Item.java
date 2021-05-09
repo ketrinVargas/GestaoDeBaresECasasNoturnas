@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package model.Objetos;
+
+import java.io.Serializable;
 
 /**
  *
- * @author rafae
+ * @author Ketrin D. Vargas, Marina B. Otokovieski, Rafael Souza
  */
-public class Item {
+public class Item implements Serializable{
     private int quantidade;
     private Produto produto;
 

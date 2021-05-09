@@ -5,23 +5,32 @@
  */
 package Frames;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import model.Consumo;
+import javax.swing.table.DefaultTableModel;
+import model.Listas.ListaConsumo;
+import model.Objetos.Consumo;
+
 
 /**
  *
- * @author marin
+ * @author Ketrin D. Vargas, Marina B. Otokovieski, Rafael Souza
  */
 public class Contabilidade extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form Contabilidade
      */
-     private static List<Consumo> listaConsumo;   
-    public Contabilidade() {
+    private static List<Consumo> listaConsumo;
+    private static int[] indexRg;
+    private DefaultTableModel dtm;
+    public Contabilidade(ListaConsumo listaConsumo) {
         initComponents();
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -85,6 +94,16 @@ public class Contabilidade extends javax.swing.JInternalFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTabConsumoCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabConsumoClienteMouseClicked(evt);
+            }
+        });
+        jTabConsumoCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTabConsumoClienteKeyReleased(evt);
             }
         });
         jScrollPane1.setViewportView(jTabConsumoCliente);
@@ -294,35 +313,83 @@ public class Contabilidade extends javax.swing.JInternalFrame {
       } else {
           Consumo cons = new Consumo(
                   Integer.parseInt(jRGClienteConsumo.getText().trim()),
-                  Integer.parseInt(jCodProdConsumo.getText().trim()),
                   Boolean.getBoolean(jQtdProdConsumo.getText().trim()));
+        
+            try {
+                if (ListaConsumo.addConsumo(cons) == false) {
+                    JOptionPane.showMessageDialog(null, "Não foi possível salvar.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Cadastro Efetuado!");
+                    Object obj = null;
+                    dtm.addRow((Object[]) obj);
+                    ListaConsumo.inicia();
+                    limpar();  
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(Contabilidade.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
-                limpar();
-            }      
+        }      
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        try {
+            int i = Integer.parseInt(jRGBuscaConsumo.getText());
+            ListaConsumo.consultarConsumo(i);
+            listaConsumo();           
+        } catch (Exception ex) {
+            Logger.getLogger(AreaCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jBotaoPagarConsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBotaoPagarConsumoActionPerformed
         // TODO add your handling code here:
-       int i = jTabConsumoCliente.getSelectedRow();
-      /*  int cod = getCod(i);
-        if (ListaProduto.remove(cod)) {
-            JOptionPane.showMessageDialog(null, "Campo não encontro");
-        } else {
-           
-           try {
-               ListaConsumo.salvar();
-               DefaultTableModel dtm = (DefaultTableModel) jjTabConsumoCliente.getModel(); 
-               dtm.removeRow(jTabConsumoCliente.getSelectedRow()); 
-               JOptionPane.showMessageDialog(null, "Campo deletado com sucesso.");
-            } catch (IOException ex) {
-                Logger.getLogger(AreaCliente.class.getName()).log(Level.SEVERE, null, ex);
+ 
+        int index = jTabConsumoCliente.getSelectedRow();
+        int rg = getRg(index);
+       
+        try {
+            if (ListaConsumo.pagarConsumo(rg)) {
+                JOptionPane.showMessageDialog(null, "Campo não encontro");
+            } else {
+                ListaConsumo.inicia();
+                
+                DefaultTableModel dtm = (DefaultTableModel) jTabConsumoCliente.getModel();
+                dtm.removeRow(jTabConsumoCliente.getSelectedRow());
+                JOptionPane.showMessageDialog(null, "Campo deletado com sucesso.");
             }
-        }*/
+        } catch (Exception ex) {
+            Logger.getLogger(Contabilidade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
     }//GEN-LAST:event_jBotaoPagarConsumoActionPerformed
+
+    private void jTabConsumoClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabConsumoClienteMouseClicked
+        // TODO add your handling code here:
+        
+        if(jTabConsumoCliente.getSelectedRow() != -1){
+            
+          jCodConsumo.setText(jTabConsumoCliente.getValueAt(jTabConsumoCliente.getSelectedRow(), 0).toString());
+          jRGClienteConsumo.setText(jTabConsumoCliente.getValueAt(jTabConsumoCliente.getSelectedRow(), 1).toString());
+          jCodProdConsumo.setText(jTabConsumoCliente.getValueAt(jTabConsumoCliente.getSelectedRow(), 2).toString());
+          jQtdProdConsumo.setText(jTabConsumoCliente.getValueAt(jTabConsumoCliente.getSelectedRow(), 3).toString());
+    
+        }
+    }//GEN-LAST:event_jTabConsumoClienteMouseClicked
+
+    private void jTabConsumoClienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTabConsumoClienteKeyReleased
+        // TODO add your handling code here:
+        
+        if(jTabConsumoCliente.getSelectedRow() != -1){
+            
+          jCodConsumo.setText(jTabConsumoCliente.getValueAt(jTabConsumoCliente.getSelectedRow(), 0).toString());
+          jRGClienteConsumo.setText(jTabConsumoCliente.getValueAt(jTabConsumoCliente.getSelectedRow(), 1).toString());
+          jCodProdConsumo.setText(jTabConsumoCliente.getValueAt(jTabConsumoCliente.getSelectedRow(), 2).toString());
+           jQtdProdConsumo.setText(jTabConsumoCliente.getValueAt(jTabConsumoCliente.getSelectedRow(), 3).toString());
+    
+        }
+    }//GEN-LAST:event_jTabConsumoClienteKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -357,4 +424,27 @@ public class Contabilidade extends javax.swing.JInternalFrame {
       jCodProdConsumo.equals("");
       jQtdProdConsumo.equals("");
  }
+   public static int getRg(int index){
+        return indexRg[index];
+    }
+   
+    public void listaConsumo() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+        Consumo objetoConsumo =  new Consumo(0, false);
+        dtm = (DefaultTableModel) jTabConsumoCliente.getModel();
+        listaConsumo = ListaConsumo.getLista(objetoConsumo, null, null);
+
+        for (int i = 0; i<listaConsumo.size(); i++){
+            Consumo con = listaConsumo.get(i);
+            indexRg[i++] = con.getCod(); 
+        }
+
+        int indexador = 0;
+        for (Consumo m : listaConsumo){
+            jTabConsumoCliente.setValueAt(m.getCod(), indexador, 0);
+            jTabConsumoCliente.setValueAt(m.getRg(), indexador, 1);
+            jTabConsumoCliente.setValueAt(m.getCod(), indexador, 2);
+            jTabConsumoCliente.setValueAt(m.getProdutoQuantidade(), indexador, 3);
+            indexador++;
+        }
+   }
  }

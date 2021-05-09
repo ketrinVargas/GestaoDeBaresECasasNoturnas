@@ -3,13 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package model.Objetos;
+
+import java.io.Serializable;
+import model.Enums.Categoria;
 
 /**
  *
- * @author ketrim
+ * @author Ketrin D. Vargas, Marina B. Otokovieski, Rafael Souza
  */
-public class Cliente {
+public class Cliente implements Serializable {
 
     private int RG;
     private String nome;
@@ -52,6 +55,9 @@ public class Cliente {
         return this.nome.toLowerCase();
     }
     
+    public Categoria getCategoria(){
+        return this.cat;
+    }
 
     public float getCredito() {
         return this.credito;

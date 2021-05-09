@@ -89,7 +89,9 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jBotaoEditarProd" min="-2" pref="75" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="jBotaoConfirmaProdVisualizar" min="-2" pref="87" max="-2" attributes="0"/>
+                                  <Component id="jComboBox1" min="-2" pref="110" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="jBotaoOrdenar" min="-2" pref="87" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -134,7 +136,8 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jBotaoExcluirProd" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jBotaoEditarProd" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jBotaoConfirmaProdVisualizar" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jBotaoOrdenar" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="20" max="32767" attributes="0"/>
                       </Group>
@@ -161,6 +164,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Pesquisar"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBotaoPesquisarProdActionPerformed"/>
+                  </Events>
                 </Component>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane1">
                   <AuxValues>
@@ -181,6 +187,10 @@
                           </Table>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTabProdCadastradosMouseClicked"/>
+                        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTabProdCadastradosKeyReleased"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -200,10 +210,30 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBotaoEditarProdActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="jBotaoConfirmaProdVisualizar">
+                <Component class="javax.swing.JButton" name="jBotaoOrdenar">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Confirma"/>
+                    <Property name="text" type="java.lang.String" value="Ordenar"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBotaoOrdenarActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JComboBox" name="jComboBox1">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="3">
+                        <StringItem index="0" value="Selecione"/>
+                        <StringItem index="1" value="C&#xf3;digo"/>
+                        <StringItem index="2" value="Consumo"/>
+                      </StringArray>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox1ActionPerformed"/>
+                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
