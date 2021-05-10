@@ -50,6 +50,7 @@ public class Contabilidade extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTabConsumoCliente = new javax.swing.JTable();
         jBotaoPagarConsumo = new javax.swing.JButton();
+        jBotaoAtualizar1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -65,8 +66,11 @@ public class Contabilidade extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jBotaoAtualizar = new javax.swing.JButton();
 
         setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel6.setText("Consumo Cliente");
@@ -85,11 +89,11 @@ public class Contabilidade extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Entrada", "Produto", "Quantidade", "Preço Unitário", "Preço Total", "Total do Consumo "
+                "Produto", "Quantidade", "Preço Unitário", "Preço Total", "Total do Consumo "
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -115,6 +119,13 @@ public class Contabilidade extends javax.swing.JInternalFrame {
             }
         });
 
+        jBotaoAtualizar1.setText("Atualizar");
+        jBotaoAtualizar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBotaoAtualizar1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -136,12 +147,13 @@ public class Contabilidade extends javax.swing.JInternalFrame {
                         .addGap(0, 130, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jBotaoPagarConsumo, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jBotaoAtualizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jBotaoPagarConsumo, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,8 +168,10 @@ public class Contabilidade extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jBotaoPagarConsumo)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBotaoPagarConsumo)
+                    .addComponent(jBotaoAtualizar1))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Consumo Cliente", jPanel2);
@@ -266,6 +280,13 @@ public class Contabilidade extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(jTable1);
 
+        jBotaoAtualizar.setText("Atualizar");
+        jBotaoAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBotaoAtualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -276,7 +297,11 @@ public class Contabilidade extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jBotaoAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -286,7 +311,9 @@ public class Contabilidade extends javax.swing.JInternalFrame {
                 .addComponent(jLabel8)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(jBotaoAtualizar)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Caixa", jPanel3);
@@ -307,7 +334,8 @@ public class Contabilidade extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        if (jCodConsumo.getText().equals("") || jRGClienteConsumo.getText().equals("")||
+         ListaConsumo.inicia();
+        if (jRGClienteConsumo.getText().equals("")||
           jCodProdConsumo.getText().equals("")|| jQtdProdConsumo.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Informe todos os campos!");
       } else {
@@ -322,7 +350,7 @@ public class Contabilidade extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(null, "Cadastro Efetuado!");
                     Object obj = null;
                     dtm.addRow((Object[]) obj);
-                    ListaConsumo.inicia();
+                    ListaConsumo.encera();
                     limpar();  
                 }
             } catch (Exception ex) {
@@ -336,8 +364,7 @@ public class Contabilidade extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         try {
             int i = Integer.parseInt(jRGBuscaConsumo.getText());
-            ListaConsumo.consultarConsumo(i);
-            listaConsumo();           
+            ListaConsumo.consultarConsumo(i);        
         } catch (Exception ex) {
             Logger.getLogger(AreaCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -345,7 +372,7 @@ public class Contabilidade extends javax.swing.JInternalFrame {
 
     private void jBotaoPagarConsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBotaoPagarConsumoActionPerformed
         // TODO add your handling code here:
- 
+        ListaConsumo.inicia();
         int index = jTabConsumoCliente.getSelectedRow();
         int rg = getRg(index);
        
@@ -353,7 +380,7 @@ public class Contabilidade extends javax.swing.JInternalFrame {
             if (ListaConsumo.pagarConsumo(rg)) {
                 JOptionPane.showMessageDialog(null, "Campo não encontro");
             } else {
-                ListaConsumo.inicia();
+                ListaConsumo.encera();
                 
                 DefaultTableModel dtm = (DefaultTableModel) jTabConsumoCliente.getModel();
                 dtm.removeRow(jTabConsumoCliente.getSelectedRow());
@@ -368,31 +395,31 @@ public class Contabilidade extends javax.swing.JInternalFrame {
     private void jTabConsumoClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabConsumoClienteMouseClicked
         // TODO add your handling code here:
         
-        if(jTabConsumoCliente.getSelectedRow() != -1){
-            
-          jCodConsumo.setText(jTabConsumoCliente.getValueAt(jTabConsumoCliente.getSelectedRow(), 0).toString());
-          jRGClienteConsumo.setText(jTabConsumoCliente.getValueAt(jTabConsumoCliente.getSelectedRow(), 1).toString());
-          jCodProdConsumo.setText(jTabConsumoCliente.getValueAt(jTabConsumoCliente.getSelectedRow(), 2).toString());
-          jQtdProdConsumo.setText(jTabConsumoCliente.getValueAt(jTabConsumoCliente.getSelectedRow(), 3).toString());
-    
-        }
     }//GEN-LAST:event_jTabConsumoClienteMouseClicked
 
     private void jTabConsumoClienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTabConsumoClienteKeyReleased
         // TODO add your handling code here:
-        
-        if(jTabConsumoCliente.getSelectedRow() != -1){
-            
-          jCodConsumo.setText(jTabConsumoCliente.getValueAt(jTabConsumoCliente.getSelectedRow(), 0).toString());
-          jRGClienteConsumo.setText(jTabConsumoCliente.getValueAt(jTabConsumoCliente.getSelectedRow(), 1).toString());
-          jCodProdConsumo.setText(jTabConsumoCliente.getValueAt(jTabConsumoCliente.getSelectedRow(), 2).toString());
-           jQtdProdConsumo.setText(jTabConsumoCliente.getValueAt(jTabConsumoCliente.getSelectedRow(), 3).toString());
-    
-        }
+
     }//GEN-LAST:event_jTabConsumoClienteKeyReleased
+
+    private void jBotaoAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBotaoAtualizarActionPerformed
+        // TODO add your handling code here:
+         try {
+            ListaConsumo.mostrarCustoLucro();        
+        } catch (Exception ex) {
+            Logger.getLogger(AreaCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jBotaoAtualizarActionPerformed
+
+    private void jBotaoAtualizar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBotaoAtualizar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBotaoAtualizar1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBotaoAtualizar;
+    private javax.swing.JButton jBotaoAtualizar1;
     private javax.swing.JButton jBotaoPagarConsumo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -427,24 +454,5 @@ public class Contabilidade extends javax.swing.JInternalFrame {
    public static int getRg(int index){
         return indexRg[index];
     }
-   
-    public void listaConsumo() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-        Consumo objetoConsumo =  new Consumo(0, false);
-        dtm = (DefaultTableModel) jTabConsumoCliente.getModel();
-        listaConsumo = ListaConsumo.getLista(objetoConsumo, null, null);
-
-        for (int i = 0; i<listaConsumo.size(); i++){
-            Consumo con = listaConsumo.get(i);
-            indexRg[i++] = con.getCod(); 
-        }
-
-        int indexador = 0;
-        for (Consumo m : listaConsumo){
-            jTabConsumoCliente.setValueAt(m.getCod(), indexador, 0);
-            jTabConsumoCliente.setValueAt(m.getRg(), indexador, 1);
-            jTabConsumoCliente.setValueAt(m.getCod(), indexador, 2);
-            jTabConsumoCliente.setValueAt(m.getProdutoQuantidade(), indexador, 3);
-            indexador++;
-        }
-   }
+      
  }

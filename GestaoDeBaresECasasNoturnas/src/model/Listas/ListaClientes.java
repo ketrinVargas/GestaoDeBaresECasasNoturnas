@@ -31,10 +31,10 @@ public class ListaClientes {
     private static List<Cliente> ultimaLista;
     
      public static boolean addCliente(Cliente cliente){
-        listaCliente.add(cliente);
-        return false;
+        return listaCliente.add(cliente);
     }
-    
+  
+  
     public static Cliente consultarCliente(int rg) throws Exception {
         for (Cliente cliente : listaCliente) {
             if (cliente.getRG() ==rg) {
@@ -103,6 +103,12 @@ public class ListaClientes {
        }
       return result;
    }
+     
+       public static String getltimaLista(){
+        return ultimaLista.toString();
+    }
+       
+     
      
      public static List<Cliente> getLista(Object obj, String procura, Method metodo) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
        ultimaLista = new ArrayList();

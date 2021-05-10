@@ -41,11 +41,11 @@ public class AreaCliente extends javax.swing.JInternalFrame {
         indexRg = new int[1000];
         editavel = false;
         ide = 0;
-        inicia();
-        
-        
+
         DefaultTableModel modelo = (DefaultTableModel) jTabClientesCadastrados.getModel();
         jTabClientesCadastrados.setRowSorter(new TableRowSorter (modelo));
+        
+   
     }
 
  
@@ -84,6 +84,8 @@ public class AreaCliente extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
 
         setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
         setTitle("Área de Clientes");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -302,6 +304,8 @@ public class AreaCliente extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         
         if(jTabClientesCadastrados.getSelectedRow() != -1){
+            ide = getRg(jTabClientesCadastrados.getSelectedRow());
+            editavel = true;
             
             jTabClientesCadastrados.setValueAt(jNomeCadCliente.getText(), jTabClientesCadastrados.getSelectedRow(), 0);
             jTabClientesCadastrados.setValueAt(jNroRGCadCliente.getText(), jTabClientesCadastrados.getSelectedRow(), 1);
@@ -315,7 +319,12 @@ public class AreaCliente extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
+     /* this.jTabbedPane1.setSelectedIndex(1);
+      DefaultTableModel dtm = (DefaultTableModel) jTabClientesCadastrados.getModel();
+      Object [] dados = {jNomeCadCliente.getText(), jNroRGCadCliente.getText(),jDropDCatCliente.getSelectedItem(), jCredCadCliente.getText()};
+      dtm.addRow(dados);*/
+     
+     ListaClientes.inicia();
         
       if (jNomeCadCliente.getText().equals("") || jNroRGCadCliente.getText().equals("")||
           jDropDCatCliente.getSelectedItem().equals("")|| jCredCadCliente.getText().equals("")){
@@ -326,41 +335,44 @@ public class AreaCliente extends javax.swing.JInternalFrame {
                   (Categoria) jDropDCatCliente.getSelectedItem(),
                    jNomeCadCliente.getText().trim(),
                   Integer.parseInt(jCredCadCliente.getText().trim()));
- 
-            if (editavel){           
-                if (ListaClientes.editar(ide, client) == false) {
-                    JOptionPane.showMessageDialog(null, "Não foi possível editar.");
-                    editavel = false;
-                } else {
-                    JOptionPane.showMessageDialog(null, "Edição efetuada!");
-                    editavel = false;
-                    ListaClientes.inicia();
-                limpar();
-                } 
-    
-            }else{
-                criarCliente(client);
-            }
-         }
-
-        try {
-            listarClientes();
-        } catch (IllegalAccessException | InvocationTargetException ex) {
+          
+            if (ListaClientes.addCliente(client) == false) {
+                JOptionPane.showMessageDialog(null, "Não foi possível salvar.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Cadastro Efetuado!");
+                Object obj = null;
+                dtm.addRow((Object[]) obj);
+                try { 
+                    ListaClientes.encera();
+                    listarClientes();
+                } catch (IOException ex) {
                     Logger.getLogger(AreaCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-                       
+                } catch (IllegalArgumentException ex) {
+                  Logger.getLogger(AreaCliente.class.getName()).log(Level.SEVERE, null, ex);
+              } catch (IllegalAccessException ex) {
+                  Logger.getLogger(AreaCliente.class.getName()).log(Level.SEVERE, null, ex);
+              } catch (InvocationTargetException ex) {
+                  Logger.getLogger(AreaCliente.class.getName()).log(Level.SEVERE, null, ex);
+              }
+                limpar();
+            }}
+                      
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jBotaoExcluirClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBotaoExcluirClienteActionPerformed
         // TODO add your handling code here:
-        
+        ListaClientes.inicia();
         int index = jTabClientesCadastrados.getSelectedRow();
         int rg = getRg(index);
        
         if (ListaClientes.remove(rg)) {
             JOptionPane.showMessageDialog(null, "Campo não encontro");
         } else {
-            ListaClientes.inicia();
+            try {
+                ListaClientes.encera();
+            } catch (IOException ex) {
+                Logger.getLogger(AreaCliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
             DefaultTableModel dtm = (DefaultTableModel) jTabClientesCadastrados.getModel();
             dtm.removeRow(jTabClientesCadastrados.getSelectedRow());
@@ -473,23 +485,13 @@ public class AreaCliente extends javax.swing.JInternalFrame {
         return indexRg[index];
     }
 
-    private void criarCliente(Cliente c){
-
-        if (ListaClientes.addCliente(c) == false) {
-            JOptionPane.showMessageDialog(null, "Não foi possível salvar.");
-        } else {
-            JOptionPane.showMessageDialog(null, "Cadastro Efetuado!");
-            Object obj = null;
-            dtm.addRow((Object[]) obj);
-            ListaClientes.inicia();
-            limpar();
-            }    
             
- }
+ 
    public void listarClientes() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
         Cliente objetoCliente =  new Cliente(0, null, null, 0);
         dtm = (DefaultTableModel) jTabClientesCadastrados.getModel();
         listaCliente = ListaClientes.getLista(objetoCliente, null, null);
+
 
         for (int i = 0; i<listaCliente.size(); i++){
             Cliente client = listaCliente.get(i);
@@ -504,25 +506,7 @@ public class AreaCliente extends javax.swing.JInternalFrame {
             jTabClientesCadastrados.setValueAt(m.getCredito(), indexador, 3);
             indexador++;
         }
+   
    }
    
-    private void inicia() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-        Cliente objetoCliente =  new Cliente(0, null, null, 0);
-        listaCliente = ListaClientes.getLista(objetoCliente, null, null);
-        dtm = (DefaultTableModel) jTabClientesCadastrados.getModel();
-        for (int i = 0; i<listaCliente.size(); i++){
-            Object obj = null;
-        dtm.addRow((Object[]) obj);
-        }
-        
-        int indexador = 0;
-        for (Cliente m : listaCliente){
-                jTabClientesCadastrados.setValueAt(m.getNome(), indexador, 0);
-                jTabClientesCadastrados.setValueAt(m.getRG(), indexador, 1);
-                jTabClientesCadastrados.setValueAt(m.getCategoria(), indexador, 2);
-                jTabClientesCadastrados.setValueAt(m.getCredito(), indexador, 3);
-                indexador++;
-            }
- }
-  
 }
