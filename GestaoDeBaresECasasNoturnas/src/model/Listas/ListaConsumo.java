@@ -115,6 +115,10 @@ public class ListaConsumo {
         }
     }
     
+      public static String getltimaLista(){
+        return ultimaLista.toString();
+    }
+    
     public static List<Consumo> getLista(Object obj, String procura, Method metodo) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
        ultimaLista = new ArrayList();
        for(Consumo m : listaConsumo){
