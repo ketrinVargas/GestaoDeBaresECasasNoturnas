@@ -66,9 +66,9 @@ public class Main {
            
            
            ////////////CLIENTES//////////
-           rafael = new Cliente(7372951, Categoria.CAMAROTE, "Rafael", 1000);
-           ketrin = new Cliente(7894561, Categoria.PISTA, "ketrin", 100);
-           marina = new Cliente(1234567, Categoria.VIP, "marina", 10);
+         //  rafael = new Cliente(7372951, Categoria.CAMAROTE, "Rafael", 1000);
+          // ketrin = new Cliente(7894561, Categoria.PISTA, "ketrin", 100);
+          // marina = new Cliente(1234567, Categoria.VIP, "marina", 10);
            ListaClientes.addCliente(rafael);
            ListaClientes.addCliente(marina);
            ListaClientes.addCliente(ketrin);

@@ -5,12 +5,15 @@
  */
 package Frames;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.Arquivo;
+import model.Enums.Classe;
 import model.Listas.ListaConsumo;
 import model.Objetos.Consumo;
 
@@ -53,8 +56,6 @@ public class Contabilidade extends javax.swing.JInternalFrame {
         jBotaoAtualizar1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jCodConsumo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jRGClienteConsumo = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -179,10 +180,6 @@ public class Contabilidade extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Novo Consumo");
 
-        jLabel2.setText("Código do consumo");
-
-        jCodConsumo.setEditable(false);
-
         jLabel3.setText("RG Cliente");
 
         jLabel4.setText("Código do Produto");
@@ -201,18 +198,14 @@ public class Contabilidade extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(150, 150, 150)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))
+                        .addGap(193, 193, 193)
+                        .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCodConsumo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jRGClienteConsumo, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jRGClienteConsumo, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(7, 7, 7)
+                        .addGap(157, 157, 157)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel4)
                             .addComponent(jLabel5))
@@ -223,24 +216,19 @@ public class Contabilidade extends javax.swing.JInternalFrame {
                 .addGap(170, 170, 170))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(278, 278, 278))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(259, 259, 259))))
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(278, 278, 278))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(275, 275, 275)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(35, 35, 35)
                 .addComponent(jLabel1)
-                .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCodConsumo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
+                .addGap(41, 41, 41)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jRGClienteConsumo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
@@ -254,7 +242,7 @@ public class Contabilidade extends javax.swing.JInternalFrame {
                     .addComponent(jLabel5))
                 .addGap(47, 47, 47)
                 .addComponent(jButton1)
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Novo Consumo", jPanel1);
@@ -333,8 +321,12 @@ public class Contabilidade extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-         ListaConsumo.inicia();
+        try {
+            // TODO add your handling code here:
+            iniciar();
+        } catch (IOException ex) {
+            Logger.getLogger(Contabilidade.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if (jRGClienteConsumo.getText().equals("")||
           jCodProdConsumo.getText().equals("")|| jQtdProdConsumo.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Informe todos os campos!");
@@ -343,19 +335,18 @@ public class Contabilidade extends javax.swing.JInternalFrame {
                   Integer.parseInt(jRGClienteConsumo.getText().trim()),
                   Boolean.getBoolean(jQtdProdConsumo.getText().trim()));
         
-            try {
-                if (ListaConsumo.addConsumo(cons) == false) {
-                    JOptionPane.showMessageDialog(null, "Não foi possível salvar.");
+           /* try {
+              int rg = getRg();
+                if (ListaConsumo.consultarConsumo(rg) == false) {
+                    ListaConsumo.mostrarConsumosAtivos();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Cadastro Efetuado!");
-                    Object obj = null;
-                    dtm.addRow((Object[]) obj);
-                    ListaConsumo.encera();
+                    JOptionPane.showMessageDialog(null, "Não foi possível realizar um novo consumo");
+                    
                     limpar();  
                 }
             } catch (Exception ex) {
                 Logger.getLogger(Contabilidade.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            }*/
 
         }      
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -371,8 +362,13 @@ public class Contabilidade extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jBotaoPagarConsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBotaoPagarConsumoActionPerformed
-        // TODO add your handling code here:
-        ListaConsumo.inicia();
+        try {
+            // TODO add your handling code here:
+
+            iniciar();
+        } catch (IOException ex) {
+            Logger.getLogger(Contabilidade.class.getName()).log(Level.SEVERE, null, ex);
+        }
         int index = jTabConsumoCliente.getSelectedRow();
         int rg = getRg(index);
        
@@ -423,10 +419,8 @@ public class Contabilidade extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBotaoPagarConsumo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JTextField jCodConsumo;
     private javax.swing.JTextField jCodProdConsumo;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -445,8 +439,9 @@ public class Contabilidade extends javax.swing.JInternalFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
- private void limpar() {
-      jCodConsumo.equals("");
+ 
+    
+    private void limpar() {
       jRGClienteConsumo.equals("");
       jCodProdConsumo.equals("");
       jQtdProdConsumo.equals("");
@@ -454,5 +449,19 @@ public class Contabilidade extends javax.swing.JInternalFrame {
    public static int getRg(int index){
         return indexRg[index];
     }
+   
+   
+   public void iniciar() throws IOException{
+              
+     for(Classe c : Classe.values()){
+         try {
+             Arquivo.iniciaArquivos(c);
+         } catch (IOException ex) {
+             Logger.getLogger(AreaProdutos.class.getName()).log(Level.SEVERE, null, ex);
+         }
+           }
+            ListaConsumo.inicia();
+            
+   }
       
  }

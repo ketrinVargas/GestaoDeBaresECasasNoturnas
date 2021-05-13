@@ -31,8 +31,7 @@ public class ListaProduto {
     private static List<Produto> ultimaLista;
     
      public static boolean addProduto(Produto produto){
-        listaProduto.add(produto);
-        return false;
+         return listaProduto.add(produto);
     }
     
     public static Produto consultarProduto(int cod) throws Exception{

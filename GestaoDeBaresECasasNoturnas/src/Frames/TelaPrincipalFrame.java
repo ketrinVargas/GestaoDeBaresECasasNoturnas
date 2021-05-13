@@ -145,6 +145,7 @@ public class TelaPrincipalFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jAreaClienteBarraSuperiorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAreaClienteBarraSuperiorActionPerformed
+
         AreaCliente Clientess = null;
         try {
             Clientess = new AreaCliente(listaCliente);

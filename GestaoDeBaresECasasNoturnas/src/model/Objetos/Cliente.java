@@ -16,7 +16,7 @@ public class Cliente implements Serializable {
 
     private int RG;
     private String nome;
-    private Categoria cat;
+    private String cat;
     private float credito;
 
     /**
@@ -26,7 +26,7 @@ public class Cliente implements Serializable {
      * @param nome 
      * @param credito
      */
-    public Cliente(int RG, Categoria cat, String nome, int credito) {
+    public Cliente(int RG, String cat, String nome, int credito) {
         this.RG = RG;
         this.cat = cat;
         this.nome = nome;
@@ -55,7 +55,7 @@ public class Cliente implements Serializable {
         return this.nome.toLowerCase();
     }
     
-    public Categoria getCategoria(){
+    public String getCategoria(){
         return this.cat;
     }
 

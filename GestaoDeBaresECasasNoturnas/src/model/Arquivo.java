@@ -20,7 +20,7 @@ import model.Enums.Classe;
  */
 public class Arquivo {
     
-    private static String pasta = "C:\\Users\\rafae\\Documents\\Faculdade\\SEGUNDO_SEMESTRE\\POO\\TP3\\";
+    private static String pasta = "C:\\Users\\ketrim\\Documents\\ArquivoPOO";
     private static String extensao =".txt";
     
     public static void iniciaArquivos(Classe classe) throws IOException{

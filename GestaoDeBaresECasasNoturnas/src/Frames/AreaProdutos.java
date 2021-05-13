@@ -8,11 +8,14 @@ package Frames;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import model.Arquivo;
+import model.Enums.Classe;
 import model.Listas.ListaProduto;
 import model.Objetos.Produto;
 
@@ -103,12 +106,19 @@ public class AreaProdutos extends javax.swing.JInternalFrame{
 
             },
             new String [] {
-                "Código", "Descrição", "Quantidade", "Preço CUsto", "Preço Venda "
+                "Código", "Descrição", "Quantidade", "Preço Custo", "Preço Venda "
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, true
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -345,19 +355,23 @@ public class AreaProdutos extends javax.swing.JInternalFrame{
         // TODO add your handling code here:
         
           if(jTabProdCadastrados.getSelectedRow() != -1){
+              EditarProduto();
             
-            jTabProdCadastrados.setValueAt(jDescProdCad.getText(), jTabProdCadastrados.getSelectedRow(), 0);
-            jTabProdCadastrados.setValueAt(jQtdProdCad.getText(), jTabProdCadastrados.getSelectedRow(), 1);            
-            jTabProdCadastrados.setValueAt(jCustoProdCad.getText(), jTabProdCadastrados.getSelectedRow(), 2);           
-            jTabProdCadastrados.setValueAt(jVendaProdCad.getText(), jTabProdCadastrados.getSelectedRow(), 3);  
+            jTabProdCadastrados.setValueAt(jDescProdCad.getText(), jTabProdCadastrados.getSelectedRow(), 1);
+            jTabProdCadastrados.setValueAt(jQtdProdCad.getText(), jTabProdCadastrados.getSelectedRow(), 2);            
+            jTabProdCadastrados.setValueAt(jCustoProdCad.getText(), jTabProdCadastrados.getSelectedRow(), 3);           
+            jTabProdCadastrados.setValueAt(jVendaProdCad.getText(), jTabProdCadastrados.getSelectedRow(), 4);  
     
         }
     }//GEN-LAST:event_jBotaoEditarProdActionPerformed
 
     private void jBotaoConfirmaCadProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBotaoConfirmaCadProdActionPerformed
-        // TODO add your handling code here:
-       ListaProduto.inicia();
-       
+        try {
+            // TODO add your handling code here:
+            iniciar();
+        } catch (IOException ex) {
+            Logger.getLogger(AreaProdutos.class.getName()).log(Level.SEVERE, null, ex);
+        }
        if (jDescProdCad.getText().equals("") || jQtdProdCad.getText().equals("")||
           jCustoProdCad.getText().equals("")|| jVendaProdCad.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Informe todos os campos!");
@@ -367,28 +381,29 @@ public class AreaProdutos extends javax.swing.JInternalFrame{
                   Integer.parseInt(jQtdProdCad.getText().trim()),
                   Float.parseFloat(jCustoProdCad.getText().trim()),
                   Float.parseFloat(jVendaProdCad.getText().trim()));
-            
+          
+           
             if (ListaProduto.addProduto(prod) == false){           
                    JOptionPane.showMessageDialog(null, "Não foi possível salvar.");
             
             } else {
-                   JOptionPane.showMessageDialog(null, "Cadastro Efetuado!");
-                   Object obj = null;
-                   dtm.addRow((Object[]) obj);
               try {
                   ListaProduto.encera();
+                  JOptionPane.showMessageDialog(null, "Cadastro Efetuado!");
+                  listarProduto();
+              } catch (IllegalAccessException ex) {
+                  Logger.getLogger(AreaProdutos.class.getName()).log(Level.SEVERE, null, ex);
+              } catch (IllegalArgumentException ex) {
+                  Logger.getLogger(AreaProdutos.class.getName()).log(Level.SEVERE, null, ex);
+              } catch (InvocationTargetException ex) {
+                  Logger.getLogger(AreaProdutos.class.getName()).log(Level.SEVERE, null, ex);
               } catch (IOException ex) {
                   Logger.getLogger(AreaProdutos.class.getName()).log(Level.SEVERE, null, ex);
               }
                    limpar();
-                   }
+            }
        }
-    
-
-    
-           
-       
-        
+                
     }//GEN-LAST:event_jBotaoConfirmaCadProdActionPerformed
 
     private void jDescProdCadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDescProdCadActionPerformed
@@ -397,22 +412,21 @@ public class AreaProdutos extends javax.swing.JInternalFrame{
 
     private void jBotaoExcluirProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBotaoExcluirProdActionPerformed
         // TODO add your handling code here:
-        ListaProduto.inicia();
+      
         int index = jTabProdCadastrados.getSelectedRow();
         int cod = getCod(index);
        
         if (ListaProduto.remove(cod)) {
             JOptionPane.showMessageDialog(null, "Campo não encontro");
         } else {
-            try { 
-                ListaProduto.encera();
+            try {
+               ListaProduto.encera(); ; 
+               DefaultTableModel dtm = (DefaultTableModel) jTabProdCadastrados.getModel(); 
+               dtm.removeRow(jTabProdCadastrados.getSelectedRow()); 
+               JOptionPane.showMessageDialog(null, "Campo deletado com sucesso.");
             } catch (IOException ex) {
-                Logger.getLogger(AreaProdutos.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AreaCliente.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            DefaultTableModel dtm = (DefaultTableModel) jTabProdCadastrados.getModel();
-            dtm.removeRow(jTabProdCadastrados.getSelectedRow());
-            JOptionPane.showMessageDialog(null, "Campo deletado com sucesso.");
         }
 
     }//GEN-LAST:event_jBotaoExcluirProdActionPerformed
@@ -422,10 +436,10 @@ public class AreaProdutos extends javax.swing.JInternalFrame{
         
         if( jTabProdCadastrados.getSelectedRow() != -1){
             
-          jDescProdCad.setText( jTabProdCadastrados.getValueAt( jTabProdCadastrados.getSelectedRow(), 0).toString());
-          jQtdProdCad.setText( jTabProdCadastrados.getValueAt( jTabProdCadastrados.getSelectedRow(), 1).toString());
-          jCustoProdCad.setText( jTabProdCadastrados.getValueAt( jTabProdCadastrados.getSelectedRow(), 2).toString());
-          jVendaProdCad.setText( jTabProdCadastrados.getValueAt( jTabProdCadastrados.getSelectedRow(), 3).toString());
+          jDescProdCad.setText( jTabProdCadastrados.getValueAt( jTabProdCadastrados.getSelectedRow(), 1).toString());
+          jQtdProdCad.setText( jTabProdCadastrados.getValueAt( jTabProdCadastrados.getSelectedRow(), 2).toString());
+          jCustoProdCad.setText( jTabProdCadastrados.getValueAt( jTabProdCadastrados.getSelectedRow(), 3).toString());
+          jVendaProdCad.setText( jTabProdCadastrados.getValueAt( jTabProdCadastrados.getSelectedRow(), 4).toString());
         }
     }//GEN-LAST:event_jTabProdCadastradosMouseClicked
 
@@ -434,10 +448,10 @@ public class AreaProdutos extends javax.swing.JInternalFrame{
         
          if(jTabProdCadastrados.getSelectedRow() != -1){
             
-          jDescProdCad.setText(jTabProdCadastrados.getValueAt(jTabProdCadastrados.getSelectedRow(), 0).toString());
-          jQtdProdCad.setText(jTabProdCadastrados.getValueAt(jTabProdCadastrados.getSelectedRow(), 1).toString());
-          jCustoProdCad.setText(jTabProdCadastrados.getValueAt(jTabProdCadastrados.getSelectedRow(), 2).toString());
-          jVendaProdCad.setText(jTabProdCadastrados.getValueAt(jTabProdCadastrados.getSelectedRow(), 3).toString());
+          jDescProdCad.setText(jTabProdCadastrados.getValueAt(jTabProdCadastrados.getSelectedRow(), 1).toString());
+          jQtdProdCad.setText(jTabProdCadastrados.getValueAt(jTabProdCadastrados.getSelectedRow(), 2).toString());
+          jCustoProdCad.setText(jTabProdCadastrados.getValueAt(jTabProdCadastrados.getSelectedRow(), 3).toString());
+          jVendaProdCad.setText(jTabProdCadastrados.getValueAt(jTabProdCadastrados.getSelectedRow(), 4).toString());
     
         }
     }//GEN-LAST:event_jTabProdCadastradosKeyReleased
@@ -519,23 +533,60 @@ public class AreaProdutos extends javax.swing.JInternalFrame{
     }
 
    public void listarProduto() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-        Produto objetoProduto =  new Produto( null, 0, 0, 0);
-        dtm = (DefaultTableModel) jTabProdCadastrados.getModel();
-        listaProduto = ListaProduto.getLista(objetoProduto, null, null);
+    /*Produto objetoProduto =  new Produto(null, 0, 0, 0);
+    dtm = (DefaultTableModel) jTabProdCadastrados.getModel();
+    listaProduto = ListaProduto.getLista(objetoProduto, null, null);
 
-        for (int i = 0; i<listaProduto.size(); i++){
-            Produto prod = listaProduto.get(i);
-            indexCod[i++] = prod.getCod(); 
-        }
+    for (int i = 0; i<listaProduto.size(); i++){
+        Produto prod = listaProduto.get(i);
+          indexCod[i++] = prod.getCod(); 
+    }
 
-        int indexador = 0;
-        for (Produto m : listaProduto){
-            jTabProdCadastrados.setValueAt(m.getDescricao(), indexador, 0);
-            jTabProdCadastrados.setValueAt(m.getQuantidade(), indexador, 1);
-            jTabProdCadastrados.setValueAt(m.getPrecoCusto(), indexador, 2);
-            jTabProdCadastrados.setValueAt(m.getPrecoVenda(), indexador, 3);
-            indexador++;
-        }
+    int indexador = 0;
+    for (Produto m : listaProduto){
+        jTabProdCadastrados.setValueAt(m.getCod(), indexador, 0);
+        jTabProdCadastrados.setValueAt(m.getDescricao(), indexador, 1);
+        jTabProdCadastrados.setValueAt(m.getQuantidade(), indexador, 2);
+        jTabProdCadastrados.setValueAt(m.getPrecoCusto(), indexador, 3);
+        jTabProdCadastrados.setValueAt(m.getPrecoVenda(), indexador, 4);
+        indexador++;
+    }*/
+    
+      DefaultTableModel dtm = (DefaultTableModel) jTabProdCadastrados.getModel();
+      Object [] dados = {jCodConsumo.getText(),jDescProdCad.getText(), jQtdProdCad.getText(),jCustoProdCad.getText(), jVendaProdCad.getText()};
+      dtm.addRow(dados);
+
+      }
+   
+   public void iniciar() throws IOException{
+              
+     for(Classe c : Classe.values()){
+         try {
+             Arquivo.iniciaArquivos(c);
+         } catch (IOException ex) {
+             Logger.getLogger(AreaProdutos.class.getName()).log(Level.SEVERE, null, ex);
+         }
+           }
+            ListaProduto.inicia();
+            
+   }
+   
+   private void EditarProduto(){
+        Produto prod = null;
+        if (ListaProduto.editar(ide, prod) == false) {
+                    JOptionPane.showMessageDialog(null, "Não foi possível editar.");
+                    editavel = false;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Edição efetuada!");
+                    editavel = false;
+                try { 
+                    ListaProduto.encera();
+                } catch (IOException ex) {
+                    Logger.getLogger(AreaProdutos.class.getName()).log(Level.SEVERE, null, ex);
+                }
+              
+       
+   }
    }
    
    
