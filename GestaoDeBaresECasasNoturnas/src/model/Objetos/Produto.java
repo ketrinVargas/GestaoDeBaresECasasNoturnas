@@ -26,7 +26,7 @@ public class Produto implements Serializable {
     private float precoCusto;
     private float precoVenda;
 
-    public Produto(String descricao, int quantidade, float precoCusto, float precoVenda) {
+    public Produto(int produtosRegistrados, String descricao, int quantidade, float precoCusto, float precoVenda) {
         this.cod = produtosRegistrados++;
         this.descricao = descricao;
         this.quantidade = quantidade;

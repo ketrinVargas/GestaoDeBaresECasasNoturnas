@@ -78,12 +78,12 @@ public class AreaProdutos extends javax.swing.JInternalFrame{
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jDescProdCad = new javax.swing.JTextField();
+        jCodCad = new javax.swing.JTextField();
         jQtdProdCad = new javax.swing.JTextField();
         jCustoProdCad = new javax.swing.JTextField();
         jVendaProdCad = new javax.swing.JTextField();
         jBotaoConfirmaCadProd = new javax.swing.JButton();
-        jCodConsumo = new javax.swing.JTextField();
+        jCod = new javax.swing.JTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -254,9 +254,9 @@ public class AreaProdutos extends javax.swing.JInternalFrame{
 
         jLabel6.setText("Preço de venda");
 
-        jDescProdCad.addActionListener(new java.awt.event.ActionListener() {
+        jCodCad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jDescProdCadActionPerformed(evt);
+                jCodCadActionPerformed(evt);
             }
         });
 
@@ -267,7 +267,11 @@ public class AreaProdutos extends javax.swing.JInternalFrame{
             }
         });
 
-        jCodConsumo.setEditable(false);
+        jCod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCodActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -281,12 +285,12 @@ public class AreaProdutos extends javax.swing.JInternalFrame{
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
-                                .addComponent(jCodConsumo, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(196, 196, 196))
+                                .addComponent(jCod, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(191, 191, 191))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jDescProdCad, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jCodCad, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel4)
@@ -313,11 +317,11 @@ public class AreaProdutos extends javax.swing.JInternalFrame{
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jCodConsumo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jDescProdCad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCodCad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -332,7 +336,7 @@ public class AreaProdutos extends javax.swing.JInternalFrame{
                     .addComponent(jVendaProdCad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46)
                 .addComponent(jBotaoConfirmaCadProd)
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
 
         jCadEdProd.addTab("Cadastro/Edição de Produtos", jPanel3);
@@ -356,8 +360,8 @@ public class AreaProdutos extends javax.swing.JInternalFrame{
         
           if(jTabProdCadastrados.getSelectedRow() != -1){
               EditarProduto();
-            
-            jTabProdCadastrados.setValueAt(jDescProdCad.getText(), jTabProdCadastrados.getSelectedRow(), 1);
+            jTabProdCadastrados.setValueAt(jCod.getText(), jTabProdCadastrados.getSelectedRow(), 0);
+            jTabProdCadastrados.setValueAt(jCodCad.getText(), jTabProdCadastrados.getSelectedRow(), 1);
             jTabProdCadastrados.setValueAt(jQtdProdCad.getText(), jTabProdCadastrados.getSelectedRow(), 2);            
             jTabProdCadastrados.setValueAt(jCustoProdCad.getText(), jTabProdCadastrados.getSelectedRow(), 3);           
             jTabProdCadastrados.setValueAt(jVendaProdCad.getText(), jTabProdCadastrados.getSelectedRow(), 4);  
@@ -372,12 +376,13 @@ public class AreaProdutos extends javax.swing.JInternalFrame{
         } catch (IOException ex) {
             Logger.getLogger(AreaProdutos.class.getName()).log(Level.SEVERE, null, ex);
         }
-       if (jDescProdCad.getText().equals("") || jQtdProdCad.getText().equals("")||
+       if (jCod.getText().equals("") || jCodCad.getText().equals("") || jQtdProdCad.getText().equals("")||
           jCustoProdCad.getText().equals("")|| jVendaProdCad.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Informe todos os campos!");
       } else {
           Produto prod = new Produto( 
-                  jDescProdCad.getText().trim(),
+                  Integer.parseInt(jCod.getText().trim()),
+                  jCodCad.getText().trim(),
                   Integer.parseInt(jQtdProdCad.getText().trim()),
                   Float.parseFloat(jCustoProdCad.getText().trim()),
                   Float.parseFloat(jVendaProdCad.getText().trim()));
@@ -406,9 +411,9 @@ public class AreaProdutos extends javax.swing.JInternalFrame{
                 
     }//GEN-LAST:event_jBotaoConfirmaCadProdActionPerformed
 
-    private void jDescProdCadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDescProdCadActionPerformed
+    private void jCodCadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCodCadActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jDescProdCadActionPerformed
+    }//GEN-LAST:event_jCodCadActionPerformed
 
     private void jBotaoExcluirProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBotaoExcluirProdActionPerformed
         // TODO add your handling code here:
@@ -435,8 +440,9 @@ public class AreaProdutos extends javax.swing.JInternalFrame{
         // TODO add your handling code here:
         
         if( jTabProdCadastrados.getSelectedRow() != -1){
-            
-          jDescProdCad.setText( jTabProdCadastrados.getValueAt( jTabProdCadastrados.getSelectedRow(), 1).toString());
+          
+          jCod.setText( jTabProdCadastrados.getValueAt( jTabProdCadastrados.getSelectedRow(), 0).toString()); 
+          jCodCad.setText( jTabProdCadastrados.getValueAt( jTabProdCadastrados.getSelectedRow(), 1).toString());
           jQtdProdCad.setText( jTabProdCadastrados.getValueAt( jTabProdCadastrados.getSelectedRow(), 2).toString());
           jCustoProdCad.setText( jTabProdCadastrados.getValueAt( jTabProdCadastrados.getSelectedRow(), 3).toString());
           jVendaProdCad.setText( jTabProdCadastrados.getValueAt( jTabProdCadastrados.getSelectedRow(), 4).toString());
@@ -447,8 +453,9 @@ public class AreaProdutos extends javax.swing.JInternalFrame{
         // TODO add your handling code here:
         
          if(jTabProdCadastrados.getSelectedRow() != -1){
-            
-          jDescProdCad.setText(jTabProdCadastrados.getValueAt(jTabProdCadastrados.getSelectedRow(), 1).toString());
+          
+          jCod.setText( jTabProdCadastrados.getValueAt( jTabProdCadastrados.getSelectedRow(), 0).toString()); 
+          jCodCad.setText(jTabProdCadastrados.getValueAt(jTabProdCadastrados.getSelectedRow(), 1).toString());
           jQtdProdCad.setText(jTabProdCadastrados.getValueAt(jTabProdCadastrados.getSelectedRow(), 2).toString());
           jCustoProdCad.setText(jTabProdCadastrados.getValueAt(jTabProdCadastrados.getSelectedRow(), 3).toString());
           jVendaProdCad.setText(jTabProdCadastrados.getValueAt(jTabProdCadastrados.getSelectedRow(), 4).toString());
@@ -490,6 +497,10 @@ public class AreaProdutos extends javax.swing.JInternalFrame{
         }
     }//GEN-LAST:event_jBotaoPesquisarProdActionPerformed
 
+    private void jCodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCodActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCodActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBotaoConfirmaCadProd;
@@ -499,10 +510,10 @@ public class AreaProdutos extends javax.swing.JInternalFrame{
     private javax.swing.JButton jBotaoPesquisarProd;
     private javax.swing.JTextField jBuscaCod;
     private javax.swing.JTabbedPane jCadEdProd;
-    private javax.swing.JTextField jCodConsumo;
+    private javax.swing.JTextField jCod;
+    private javax.swing.JTextField jCodCad;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JTextField jCustoProdCad;
-    private javax.swing.JTextField jDescProdCad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -522,7 +533,8 @@ public class AreaProdutos extends javax.swing.JInternalFrame{
     // End of variables declaration//GEN-END:variables
    
     private void limpar() {
-      jDescProdCad.equals("");
+      jCod.equals("");
+      jCodCad.equals("");
       jQtdProdCad.equals("");
       jCustoProdCad.equals("");
       jVendaProdCad.equals("");
@@ -553,7 +565,7 @@ public class AreaProdutos extends javax.swing.JInternalFrame{
     }*/
     
       DefaultTableModel dtm = (DefaultTableModel) jTabProdCadastrados.getModel();
-      Object [] dados = {jCodConsumo.getText(),jDescProdCad.getText(), jQtdProdCad.getText(),jCustoProdCad.getText(), jVendaProdCad.getText()};
+      Object [] dados = {jCod.getText(),jCodCad.getText(), jQtdProdCad.getText(),jCustoProdCad.getText(), jVendaProdCad.getText()};
       dtm.addRow(dados);
 
       }
